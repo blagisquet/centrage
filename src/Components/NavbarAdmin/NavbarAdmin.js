@@ -12,7 +12,7 @@ function NavbarAdmin() {
         <span className="navbar-toggler-icon">.</span>
       </button>
       <div className="collapse navbar-collapse" id="navbarNav">
-        <ul className="navbar-nav">
+        <ul className="nav nav-tabs">
           <li className="nav-item">
             <a className="nav-link" href="/category">Catégorie</a>
           </li>

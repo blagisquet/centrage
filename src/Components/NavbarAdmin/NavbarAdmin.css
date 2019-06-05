@@ -5,22 +5,24 @@ img {
 }
 
 .nav-item {
-  margin-left: 30%;
-  margin-top: 2%;
-  font-size: 20px;
-  border: 1px solid black;
-  border-radius: 4px;
-  min-width: 35%;
+  /*margin-left:20%;*/
+  margin-top: 2%; 
+  font-size: 1.5vmax;
+  /*font-size: 20px;*/
+ /* border: 1px solid black;
+  border-radius: 4px; */
+ /* min-width: 35%;*/
   height: 5%;
   text-align: center;
 }
 
+/*
 .nav-item:hover {
   background-color: grey;
-}
+} */
 
 .login {
-  margin-left: 50%;
-  font-size: 20px;
+ /* margin-left: 10%;*/
+  font-size: 1.5vmax;
   margin-top: 2%;
 }
