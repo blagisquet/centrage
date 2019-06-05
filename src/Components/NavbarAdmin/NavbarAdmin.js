@@ -13,7 +13,7 @@ function NavbarAdmin() {
       </button>
       <div className="collapse navbar-collapse" id="navbarNav">
         <ul className="navbar-nav">
-          <li className="nav-item active">
+          <li className="nav-item">
             <a className="nav-link" href="/category">Catégorie</a>
           </li>
           <li className="nav-item">
@@ -24,6 +24,9 @@ function NavbarAdmin() {
           </li>
           <li className="nav-item">
             <a className="nav-link" href="/rdv">RDV</a>
+          </li>
+          <li className="nav-pill login">
+            <a className="nav-link" href="/login">Login</a>
           </li>
         </ul>
       </div>
