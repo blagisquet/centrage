@@ -1,9 +1,12 @@
 import React from 'react';
 import './App.css';
+import NavbarAdmin from './Components/NavbarAdmin/NavbarAdmin';
 
 function App() {
   return (
-    <div></div>
+    <div>
+      <NavbarAdmin />
+    </div>
   );
 }
 
