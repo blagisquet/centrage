@@ -1,11 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import './Category.css';
 import axios from 'axios';
 
 function Category(props) {
-
   const [category, setCategory] = useState([]);
-
   useEffect(() => {
     axios.get('http://localhost:8000/category')
       .then((result) => {
