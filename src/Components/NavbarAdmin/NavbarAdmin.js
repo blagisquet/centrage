@@ -25,7 +25,7 @@ function NavbarAdmin() {
           <li className="nav-item">
             <a className="nav-link" href="/rdv">RDV</a>
           </li>
-          <li className="nav-pill login">
+          <li className="nav-pill">
             <a className="nav-link login" href="/login">Login</a>
           </li>
         </ul>
