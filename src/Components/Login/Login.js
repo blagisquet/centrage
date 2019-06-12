@@ -17,7 +17,7 @@ function Login() {
           <input type="checkbox" className="form-check-input" id="exampleCheck1" />
           <label className="form-check-label" htmlFor="exampleCheck1">Rester connecté</label>
         </div>
-        <button type="submit" href="/homepage" className="btn btn-primary validation-button">Valider</button>
+        <button type="submit" href="/RDV" className="btn btn-primary validation-button">Valider</button>
       </form>
     </div>
   );

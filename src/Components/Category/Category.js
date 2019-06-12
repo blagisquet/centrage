@@ -4,7 +4,7 @@ import axios from 'axios';
 import _ from 'underscore';
 
 
-function Category(props) {
+function Category() {
   const [categories, setCategories] = useState([]);
   const [filterName, setFilterName] = useState([false]);
   useEffect(() => {
@@ -35,7 +35,7 @@ function Category(props) {
         <tbody>
           {categories.map((category, index) => {
             return (
-              <tr key={index}>
+              <tr key={[index]}>
                 <th scope="row" width="50%">{category.name}</th>
                 <th><button type="button" className="btn btn-primary btn-sm float-right">Editer</button></th>
                 <th><button type="button" className="btn btn-primary btn-sm float-right">Supprimer</button></th>

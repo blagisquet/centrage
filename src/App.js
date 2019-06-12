@@ -21,7 +21,7 @@ function App() {
       <Route path="/questions" exact component={Questions} />
       <Route path="/patients" exact component={Patients} />
       <Route path="/patient" exact component={Patient} />
-      <Route path="/RDV" exact component={RDV} />
+      <Route path="/rdv" exact component={RDV} />
     </div>
   );
 }
