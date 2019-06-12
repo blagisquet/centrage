@@ -6,16 +6,22 @@ function Login() {
     <div id="form-style">
       <form>
         <div className="form-group">
-          <label htmlFor="exampleInputEmail1">Adresse e-mail</label>
-          <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
+          <label htmlFor="email">
+            <input type="email" className="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email" />
+            Adresse e-mail
+          </label>
         </div>
         <div className="form-group">
-          <label htmlFor="exampleInputPassword1">Mot de passe</label>
-          <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password" />
+          <label htmlFor="password">
+            <input type="password" className="form-control" id="password" placeholder="Password" />
+            Mot de passe
+          </label>
         </div>
         <div className="form-group form-check">
-          <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-          <label className="form-check-label" htmlFor="exampleCheck1">Rester connecté</label>
+          <label className="form-check-label" htmlFor="check">
+            <input type="checkbox" className="form-check-input" id="check" />
+            Rester connecté
+          </label>
         </div>
         <button type="submit" href="/RDV" className="btn btn-primary validation-button">Valider</button>
       </form>

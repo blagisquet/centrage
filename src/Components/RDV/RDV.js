@@ -40,19 +40,17 @@ function RDV() {
           </tr>
         </thead>
         <tbody>
-          {rdv.map((rendez, index) => {
-            return (
-              <tr key={[index]}>
-                <td>{rendez.lastName}</td>
-                <td>{rendez.name}</td>
-                <td>{rendez.relativePerson.relationship}</td>
-                <td>{rendez.relativePerson.lastName}</td>
-                <td>{rendez.relativePerson.name}</td>
-                <td>{rendez.relativePerson.phone}</td>
-                <td>{rendez.hours}</td>
-              </tr>
-            );
-          })}
+          {rdv.map((rendez, index) => (
+            <tr key={[index]}>
+              <td>{rendez.lastName}</td>
+              <td>{rendez.name}</td>
+              <td>{rendez.relativePerson.relationship}</td>
+              <td>{rendez.relativePerson.lastName}</td>
+              <td>{rendez.relativePerson.name}</td>
+              <td>{rendez.relativePerson.phone}</td>
+              <td>{rendez.hours}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
