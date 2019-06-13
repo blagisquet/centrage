@@ -20,7 +20,7 @@ function RDV() {
     if (param) {
       setRdv(_.sortBy(rdv, tag).reverse());
     } else {
-      setRdv(_.sortBy(rdv, tag));
+      setRdv(_.sortBy(rdv, tag).reverse());
     }
     setFunc(!param);
   };
