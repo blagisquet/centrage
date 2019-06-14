@@ -14,17 +14,21 @@ function Category() {
       });
   }, []);
 
+  const addCategory = () => {
+  };
+
   const filterCategory = (tag, [setFunc, param]) => {
     if (param) {
       setCategories(_.sortBy(categories, tag).reverse());
     } else {
-      setCategories(_.sortBy(categories, tag));
+      setCategories(_.sortBy(categories, tag).reverse());
     }
     setFunc(!param);
   };
   return (
     <div id="category-style">
-      <button type="button" className="button-style btn btn-success">Ajouter une catégorie</button>
+      <h1>Catégories</h1>
+      <button onClick={() => addCategory} type="button" className="button-style btn btn-success">Ajouter une catégorie</button>
       <div className="table-style">
         <table className="table table-hover table-bordered">
           <thead>
@@ -38,8 +42,8 @@ function Category() {
             {categories.map((category, index) => (
               <tr key={[index]}>
                 <th scope="row" width="50%">{category.name}</th>
-                <th><button type="button" className="btn btn-primary btn-sm float-right">Editer</button></th>
-                <th><button type="button" className="btn btn-primary btn-sm float-right">Supprimer</button></th>
+                <td><button type="button" className="btn btn-primary btn-sm float-right">Editer</button></td>
+                <td><button type="button" className="btn btn-primary btn-sm float-right">Supprimer</button></td>
               </tr>
             ))}
           </tbody>

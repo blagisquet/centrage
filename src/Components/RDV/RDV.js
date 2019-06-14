@@ -27,7 +27,8 @@ function RDV() {
 
   return (
     <div className="tableStyle">
-      <table className="table table-hover table-bordered">
+      <h1>Rendez-vous</h1>
+      <table className="rdv-style table table-hover table-bordered">
         <thead>
           <tr>
             <th onClick={() => filterRdv('lastname', [setFilterLastname, filterLastname])} scope="col">Nom du client</th>
@@ -42,7 +43,7 @@ function RDV() {
         <tbody>
           {rdv.map((rendez, index) => (
             <tr key={[index]}>
-              <td>{rendez.lastName}</td>
+              <th scope="row">{rendez.lastName}</th>
               <td>{rendez.name}</td>
               <td>{rendez.relativePerson.relationship}</td>
               <td>{rendez.relativePerson.lastName}</td>
