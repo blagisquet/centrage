@@ -20,7 +20,7 @@ function NavbarAdmin() {
             <a className="nav-link" href="/questions">Questions</a>
           </li>
           <li className="nav-item">
-            <a className="nav-link" href="/patients">Patients</a>
+            <a className="nav-link" href="/clients">Clients</a>
           </li>
           <li className="nav-item">
             <a className="nav-link" href="/rdv">RDV</a>
