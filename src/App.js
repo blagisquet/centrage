@@ -19,8 +19,8 @@ function App() {
       <Route path="/homepage" exact component={Homepage} />
       <Route path="/category" exact component={Category} />
       <Route path="/questions" exact component={Questions} />
-      <Route path="/patients" exact component={Patients} />
-      <Route path="/patient" exact component={Patient} />
+      <Route path='/clients' exact component={Patients} />
+      <Route path="/client" exact component={Patient} />
       <Route path="/RDV" exact component={RDV} />
     </div>
   );
