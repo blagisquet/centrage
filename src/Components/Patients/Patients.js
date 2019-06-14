@@ -5,7 +5,6 @@ import _ from 'underscore';
 import './Patients.css';
 
 function Patients() {
-
   const [clients, setClients] = useState([]);
   const [mailArray, setMailArray] = useState([]);
   const [filterName, setFilterName] = useState(false);
@@ -16,7 +15,7 @@ function Patients() {
     axios.get('http://192.168.8.158:8000/patient')
       .then((result) => {
         setClients(result.data);
-      })
+      });
   }, []);
 
   const nameArray = (mail) => {
@@ -24,7 +23,7 @@ function Patients() {
       setMailArray([...mailArray, mail]);
     } else {
       const newEmail = [...mailArray];
-      newEmail.splice(newEmail.indexOf(mail), 1)
+      newEmail.splice(newEmail.indexOf(mail), 1);
       setMailArray(newEmail);
     }
   };
@@ -40,20 +39,20 @@ function Patients() {
 
   const renderRedirect = () => {
     if (redirect) {
-      return <Redirect to='/client' />
+      return (
+        <div>
+          <Redirect to="/client" />
+        </div>
+      );
     }
-  }
+    return null;
+  };
 
   return (
     <div className="container-fluid">
       <div className="tableStyle">
         {renderRedirect()}
-        {
-          mailArray.length ?
-            <button type="button" className="btn btn-primary btn-lg btn-block">envoyer email</button>
-            :
-            <button type="button" className="btn btn-light btn-lg btn-block" disabled>envoyer email</button>
-        }
+        {mailArray.length ? <button type="button" className="btn btn-primary btn-lg btn-block">envoyer email</button> : <button type="button" className="btn btn-light btn-lg btn-block" disabled>envoyer email</button>}
 
         <table className="table table-hover table-bordered">
           <thead>
@@ -66,33 +65,24 @@ function Patients() {
               <th scope="col">Email</th>
             </tr>
           </thead>
-          {clients.length ?
-            <tbody>
-              {clients.map((client, index) => (
-                <tr key={index} >
-                  <td >{client.name}</td>
-                  <td onClick={() => setRedirect(true)}>{client.lastName}</td>
-                  <td >Statut</td>
-                  <td >GIR</td>
-                  <td >{client.postalCode}</td>
-                  <td >
-                    <input type="checkbox" onChange={() => nameArray(client.relativePerson.mail)} name="email" />
-                  </td>
-                </tr>
-              ))
-              }
-            </tbody>
-            :
-            <tbody>
-              <tr>
-                <td>loading prenoms</td>
-                <td>loading noms</td>
-                <td>loading statuses</td>
-                <td>loading GIRs</td>
-                <td>loading zones</td>
-                <td>loading mails</td>
+          <tbody>
+            {clients.map((client, index) => (
+              <tr key={[index]}>
+                <td>{client.name}</td>
+                <td>
+                  <button type="button" onClick={() => setRedirect(true)}>
+                    {client.lastName}
+                  </button>
+                </td>
+                <td>Statut</td>
+                <td>GIR</td>
+                <td>{client.postalCode}</td>
+                <td>
+                  <input type="checkbox" onChange={() => nameArray(client.relativePerson.mail)} name="email" />
+                </td>
               </tr>
-            </tbody>}
+            ))}
+          </tbody>
         </table>
       </div>
 
