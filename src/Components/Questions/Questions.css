@@ -1,0 +1,9 @@
+#questions-style {
+  margin-top: 9vmax;
+}
+
+.question-table-style {
+  min-width: 100% !important;
+  margin-left: auto;
+  margin-right: auto;
+}

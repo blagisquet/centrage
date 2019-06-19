@@ -1,0 +1,19 @@
+#category-style {
+  margin-top: 9vmax;
+}
+
+.table-style {
+  width: 80% !important;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1rem;
+  
+}
+
+.button-style {
+  margin-left: 97rem;
+}
+
+h1 {
+  text-align: center;
+}
