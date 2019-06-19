@@ -13,18 +13,6 @@ function Questions() {
       });
   }, []);
 
-  const addQuestion = () => {
-    return (
-        <form>
-          <label>Name</label>
-          <input type="text" name="name" value="" />
-          <label>Username</label>
-          <input type="text" name="username" value="" />
-          <button>Add new user</button>
-        </form>
-    )
-  }
-
   const filterQuestions = (tag, [setFunc, param]) => {
     if (param) {
       setQuestions(_.sortBy(questions, tag).reverse());
@@ -37,7 +25,7 @@ function Questions() {
   return (
     <div className="container" id="questions-style">
       <h1>Questions</h1>
-      <button onClick={() => addQuestion} type="button" className="btn btn-success">Ajouter une question</button>
+      <button type="button" className="btn btn-success">Ajouter une question</button>
       <table className="question-table-style table table-hover table-bordered">
         <thead>
           <tr>
@@ -52,7 +40,10 @@ function Questions() {
           {questions.map((question, index) => (
             <tr key={[index]}>
               <th scope="row">{question.question}</th>
-              <td><input type="text" />{question.categorie}</td>
+              <td>
+                <input type="text" />
+                {question.categorie}
+              </td>
               <td>{question.type}</td>
               <td><button type="button" className="btn btn-primary btn-sm float-right">Editer</button></td>
               <td><button type="button" className="btn btn-primary btn-sm float-right">Supprimer</button></td>
