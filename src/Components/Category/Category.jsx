@@ -8,7 +8,7 @@ function Category() {
   const [categories, setCategories] = useState([]);
   const [filterName, setFilterName] = useState([false]);
   useEffect(() => {
-    axios.get('http://192.168.8.158:8000/categories')
+    axios.get('http://192.168.184.172:8000/categories')
       .then((result) => {
         setCategories(result.data);
       });
