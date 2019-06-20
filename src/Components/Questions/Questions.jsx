@@ -20,7 +20,6 @@ function Questions() {
   useEffect(() => {
     axios.get('http://192.168.184.172:8000/question')
       .then((result) => {
-        console.log(result);
         setQuestions(result.data);
       });
   }, []);
@@ -28,7 +27,7 @@ function Questions() {
   const submit = (e) => {
     e.preventDefault();
     console.log(dataSend);
-    axios.post('http://192.168.184.172:8000/new', dataSend)
+    axios.post('http://192.168.184.172:8000/question/new', dataSend)
       .then((response) => {
         console.log(response);
       })
@@ -61,7 +60,7 @@ function Questions() {
           <label htmlFor="formName">Nom de la question</label>
           <input type="text" className="form-control" id="formName" onChange={e => setName(e.target.value)} placeholder="Nom de la question" />
         </div>
-        <div className="form-group form-row col-md-4 col">
+        <div className="form-row align-items-center col-md-4">
           <label htmlFor="inputState">Catégorie</label>
           <select id="inputState" className="form-control" onChange={e => setCategory(e.target.value)}>
             <option value='0' disabled selected>Choix catégorie</option>
@@ -72,7 +71,7 @@ function Questions() {
             ))}
           </select>
         </div>
-        <div className="form-group form-row col-md-4 col">
+        <div className="form-row align-items-center col-md-4">
           <label htmlFor="inputState">Type de question</label>
           <select id="inputState" className="form-control" onChange={e => setType(e.target.value)}>
             {/*{questions.map((question, index) => (
@@ -87,7 +86,7 @@ function Questions() {
             <option>Nombre</option>
           </select>
         </div>
-        <div className="form-group col-md-4" >
+        <div className="form-row align-items-center col-md-4" >
           <label htmlFor="echelleMin">Echelle min</label>
           <input type="number" className="form-control" id="echelleMin" onChange={e => setMin(e.target.value)} />
           <label htmlFor="echelleMax">Echelle max</label>

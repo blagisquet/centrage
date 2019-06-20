@@ -7,6 +7,10 @@ import _ from 'underscore';
 function Category() {
   const [categories, setCategories] = useState([]);
   const [filterName, setFilterName] = useState([false]);
+  const [category, setCategory] = useState([]);
+  const catSend = {
+    category: category
+  }
   useEffect(() => {
     axios.get('http://192.168.184.172:8000/categories')
       .then((result) => {
@@ -14,7 +18,16 @@ function Category() {
       });
   }, []);
 
-  const addCategory = () => {
+  const submit = (e) => {
+    e.preventDefault();
+    console.log(catSend);
+    axios.post('http://192.168.184.172:8000/categories/new', catSend)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const filterCategory = (tag, [setFunc, param]) => {
@@ -28,7 +41,17 @@ function Category() {
   return (
     <div id="category-style">
       <h1>Catégories</h1>
-      <button onClick={() => addCategory} type="button" className="button-style btn btn-success">Ajouter une catégorie</button>
+      <form>
+        <div className="form-row align-items-center catClass">
+          <div className="col-6">
+            <label className="sr-only" htmlFor="category">Catégorie</label>
+            <input type="text" className="form-control mb-2" id="category" onChange={e => setCategory(e.target.value)} placeholder="Nom de la catégorie" />
+          </div>
+          <div className="col-3">
+            <button type="submit" onClick={submit} className="button-style btn btn-success mb-2">Ajouter une catégorie</button>
+          </div>
+        </div>
+      </form>
       <div className="table-style">
         <table className="table table-hover table-bordered">
           <thead>
