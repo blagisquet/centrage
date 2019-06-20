@@ -15,7 +15,7 @@ function Questions() {
   const dataSend = {
     name: name,
     category: category,
-    type: type+'('+min+','+max+')'
+    type: type + '(' + min + ',' + max + ')'
   }
   useEffect(() => {
     axios.get('http://192.168.184.172:8000/question')
@@ -26,10 +26,14 @@ function Questions() {
 
   const submit = (e) => {
     e.preventDefault();
+    const data = new FormData();
+    data.append('name', dataSend.name);
+    data.append('category', dataSend.category);
+    data.append('type', dataSend.type);
     console.log(dataSend);
-    axios.post('http://192.168.184.172:8000/question/new', dataSend)
+    axios.post('http://192.168.184.172:8000/question/new', data)
       .then((response) => {
-        console.log(response);
+        console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -56,43 +60,49 @@ function Questions() {
     <div className="container" id="questions-style">
       <h1>Questions</h1>
       <form>
-        <div className="form-group">
-          <label htmlFor="formName">Nom de la question</label>
-          <input type="text" className="form-control" id="formName" onChange={e => setName(e.target.value)} placeholder="Nom de la question" />
+        <div className="row">
+          <div className="form-group">
+            <label htmlFor="formName">Nom de la question</label>
+            <input type="text" className="form-control inputWidth" id="formName" onChange={e => setName(e.target.value)} placeholder="Nom de la question" />
+          </div>
         </div>
-        <div className="form-row align-items-center col-md-4">
-          <label htmlFor="inputState">Catégorie</label>
-          <select id="inputState" className="form-control" onChange={e => setCategory(e.target.value)}>
-            <option value='0' disabled selected>Choix catégorie</option>
-            {categories.map((category, index) => (
-              <option key={[index]}>
-                {category.name}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="form-row align-items-center col-md-4">
-          <label htmlFor="inputState">Type de question</label>
-          <select id="inputState" className="form-control" onChange={e => setType(e.target.value)}>
-            {/*{questions.map((question, index) => (
+        <div className="row">
+          <div className="form-row align-items-center col-md-4">
+            <label htmlFor="inputState">Catégorie</label>
+            <select id="inputState" className="form-control" onChange={e => setCategory(e.target.value)}>
+              <option value='0' disabled selected>Choix catégorie</option>
+              {categories.map((category, index) => (
+                <option key={[index]}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="form-row align-items-center col-md-4">
+            <label htmlFor="inputState">Type de question</label>
+            <select id="inputState" className="form-control" onChange={e => setType(e.target.value)}>
+              {/*{questions.map((question, index) => (
               <option key={[index]}>
                 {question.type}
               </option>
             ))} */}
-            <option disabled selected>Choix du type de question</option>
-            <option>Oui/Non</option>
-            <option>Echelle</option>
-            <option>Texte</option>
-            <option>Nombre</option>
-          </select>
+              <option disabled selected>Choix du type de question</option>
+              <option>Oui/Non</option>
+              <option>Echelle</option>
+              <option>Texte</option>
+              <option>Nombre</option>
+            </select>
+          </div>
         </div>
-        <div className="form-row align-items-center col-md-4" >
-          <label htmlFor="echelleMin">Echelle min</label>
-          <input type="number" className="form-control" id="echelleMin" onChange={e => setMin(e.target.value)} />
-          <label htmlFor="echelleMax">Echelle max</label>
-          <input type="number" className="form-control" id="echelleMax" onChange={e => setMax(e.target.value)} />
+        <div className="row">
+          <div className="form-row align-items-center col-md-4" >
+            <label htmlFor="echelleMin">Echelle min</label>
+            <input type="number" className="form-control" id="echelleMin" onChange={e => setMin(e.target.value)} />
+            <label htmlFor="echelleMax">Echelle max</label>
+            <input type="number" className="form-control" id="echelleMax" onChange={e => setMax(e.target.value)} />
+          </div>
+          <button type="submit" onClick={submit} className="btn btn-success">Ajouter une question</button>
         </div>
-        <button type="submit" onClick={submit} className="btn btn-success">Ajouter une question</button>
       </form>
       <table className="question-table-style table table-hover table-bordered">
         <thead>
@@ -109,8 +119,7 @@ function Questions() {
             <tr key={[index]}>
               <th scope="row">{question.content}</th>
               <td>
-                {/*<input type="text" />*/}
-                {question.category}
+                {question.category.name}
               </td>
               <td>{question.type}</td>
               <td><button type="button" className="btn btn-primary btn-sm float-right">Editer</button></td>
