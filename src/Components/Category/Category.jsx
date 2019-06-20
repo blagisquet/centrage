@@ -11,6 +11,7 @@ function Category() {
   const catSend = {
     category: category
   }
+  
   useEffect(() => {
     axios.get('http://192.168.184.172:8000/categories')
       .then((result) => {
@@ -20,9 +21,17 @@ function Category() {
 
   const submit = (e) => {
     e.preventDefault();
+    const data = new FormData();
+    data.append('name', catSend.category);
     console.log(catSend);
-    axios.post('http://192.168.184.172:8000/categories/new', catSend)
+    axios.post('http://192.168.184.172:8000/categories/new', data)
       .then((response) => {
+        if (response.status === 200) {
+          setCategories([...categories, {
+            name: category
+          }
+        ]);
+        }
         console.log(response);
       })
       .catch((error) => {

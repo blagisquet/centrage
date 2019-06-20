@@ -17,6 +17,20 @@ function Questions() {
     category: category,
     type: type + '(' + min + ',' + max + ')'
   }
+
+  const deleteQuestion = (e) => {
+    e.preventDefault();
+    axios.delete(`http://192.168.184.172:8000/question`)
+      .then((response) => {
+        console.log(response);
+        prompt(`La question ${response.data.id} ${response.data.content} va être supprimée.`);
+      })
+      .catch((error) => {
+        console.log(error);
+        alert(`${error}`)
+      })
+  }
+
   useEffect(() => {
     axios.get('http://192.168.184.172:8000/question')
       .then((result) => {
@@ -30,10 +44,19 @@ function Questions() {
     data.append('name', dataSend.name);
     data.append('category', dataSend.category);
     data.append('type', dataSend.type);
-    console.log(dataSend);
     axios.post('http://192.168.184.172:8000/question/new', data)
       .then((response) => {
-        console.log(response.data);
+        if (response.status === 200) {
+          setQuestions([...questions, {
+            id: response.data.id,
+            content: name,
+            type: type,
+            category: {
+              name: category
+            }
+          }
+          ]);
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -67,7 +90,7 @@ function Questions() {
           </div>
         </div>
         <div className="row">
-          <div className="form-row align-items-center col-md-4">
+          <div className="form-row align-items-center col-md-6">
             <label htmlFor="inputState">Catégorie</label>
             <select id="inputState" className="form-control" onChange={e => setCategory(e.target.value)}>
               <option value='0' disabled selected>Choix catégorie</option>
@@ -78,7 +101,7 @@ function Questions() {
               ))}
             </select>
           </div>
-          <div className="form-row align-items-center col-md-4">
+          <div className="form-row align-items-center col-md-6">
             <label htmlFor="inputState">Type de question</label>
             <select id="inputState" className="form-control" onChange={e => setType(e.target.value)}>
               {/*{questions.map((question, index) => (
@@ -94,15 +117,17 @@ function Questions() {
             </select>
           </div>
         </div>
-        <div className="row">
-          <div className="form-row align-items-center col-md-4" >
-            <label htmlFor="echelleMin">Echelle min</label>
-            <input type="number" className="form-control" id="echelleMin" onChange={e => setMin(e.target.value)} />
-            <label htmlFor="echelleMax">Echelle max</label>
-            <input type="number" className="form-control" id="echelleMax" onChange={e => setMax(e.target.value)} />
+        <div className="row maxStyle">
+          <div className="form-row align-items-center col-md-6">
+              <label htmlFor="echelleMin">Echelle min</label>
+              <input type="number" className="form-control" id="echelleMin" onChange={e => setMin(e.target.value)} />
+            </div>
+            <div className="form-row align-items-center col-md-6">
+              <label htmlFor="echelleMax">Echelle max</label>
+              <input type="number" className="form-control" id="echelleMax" onChange={e => setMax(e.target.value)} />
+            </div>
           </div>
-          <button type="submit" onClick={submit} className="btn btn-success">Ajouter une question</button>
-        </div>
+        <button type="submit" onClick={submit} className="btn btn-success questionBut">Ajouter une question</button>
       </form>
       <table className="question-table-style table table-hover table-bordered">
         <thead>
@@ -123,7 +148,7 @@ function Questions() {
               </td>
               <td>{question.type}</td>
               <td><button type="button" className="btn btn-primary btn-sm float-right">Editer</button></td>
-              <td><button type="button" className="btn btn-primary btn-sm float-right">Supprimer</button></td>
+              <td><button type="button" onClick={deleteQuestion} className="btn btn-primary btn-sm float-right">Supprimer</button></td>
             </tr>
           ))}
         </tbody>

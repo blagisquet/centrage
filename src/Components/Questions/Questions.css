@@ -9,5 +9,22 @@
 }
 
 .inputWidth {
-  width: 70rem;
+  width:69rem;
+  margin-left: 0.5rem;
+}
+
+.selectWidth {
+  width: 50rem;
+  margin-top: 1rem;
+}
+
+.questionBut {
+  margin-top: 1rem;
+  margin-left: 80%;
+  margin-bottom: 1rem;
+  width: 20%;
+}
+
+.maxStyle {
+  margin-top: 1rem;
 }
