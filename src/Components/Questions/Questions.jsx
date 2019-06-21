@@ -84,9 +84,9 @@ function Questions() {
       <h1>Questions</h1>
       <form>
         <div className="row">
-          <div className="form-group">
+          <div className="form-group inputWidth">
             <label htmlFor="formName">Nom de la question</label>
-            <input type="text" className="form-control inputWidth" id="formName" onChange={e => setName(e.target.value)} placeholder="Nom de la question" />
+            <input type="text" className="form-control" id="formName" onChange={e => setName(e.target.value)} placeholder="Nom de la question" />
           </div>
         </div>
         <div className="row">

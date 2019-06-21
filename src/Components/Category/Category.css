@@ -11,7 +11,13 @@
 }
 
 .catClass {
-  margin-left: 60%;
+  display: flex;
+  justify-content: center;
+  width: 85%;
+}
+
+.button-style {
+  width: 180%;
 }
 
 h1 {
