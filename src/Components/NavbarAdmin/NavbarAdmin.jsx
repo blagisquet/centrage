@@ -22,20 +22,20 @@ function NavbarAdmin() {
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="nav nav-tabs">
-            <li className="nav-item">
-              <Link to="/category" className="nav-link">Catégorie</Link>
+            <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+              <Link to="/category"  className="nav-link">Catégorie</Link>
             </li>
-            <li className="nav-item">
-              <Link to="/questions" className="nav-link">Questions</Link>
+            <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+              <Link to="/questions"  className="nav-link">Questions</Link>
             </li>
-            <li className="nav-item">
-              <Link to="/clients" className="nav-link">Clients</Link>
+            <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+              <Link to="/clients"  className="nav-link">Clients</Link>
             </li>
-            <li className="nav-item">
-              <Link to="/rdv" className="nav-link">RDV</Link>
+            <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+              <Link to="/rdv"  className="nav-link">RDV</Link>
             </li>
-            <li className="nav-item">
-              <Link to="/login" className="nav-link login">Login</Link>
+            <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+              <Link to="/login"  className="nav-link login">Login</Link>
             </li>
           </ul>
         </div>

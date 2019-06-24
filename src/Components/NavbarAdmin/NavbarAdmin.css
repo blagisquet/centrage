@@ -1,4 +1,4 @@
-@media screen and (max-width: 760px) {
+@media screen and (max-width: 780px) {
   .nav-link {
     font-size: 4vmax;
     margin-top: 2%;
@@ -12,13 +12,12 @@
     margin-top: 5%;
   }
   .login {
-    /* margin-left: 10%;*/
      font-size: 4vmax;
      margin-top: 0.1rem;
-   }
+   } 
 }
 
-@media screen and (min-width:761px) and (max-width: 1920px) {
+@media screen and (min-width:781px) and (max-width: 1920px) {
   .nav-item {
     /*margin-left:20%;*/
     margin-top: 2%; 
