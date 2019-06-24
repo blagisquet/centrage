@@ -13,7 +13,7 @@ function Category() {
   }
   
   useEffect(() => {
-    axios.get('http://192.168.184.172:8000/categories')
+    axios.get('http://192.168.184.172:8001/categories')
       .then((result) => {
         setCategories(result.data);
       });
@@ -24,7 +24,7 @@ function Category() {
     const data = new FormData();
     data.append('name', catSend.category);
     console.log(catSend);
-    axios.post('http://192.168.184.172:8000/categories/new', data)
+    axios.post('http://192.168.184.172:8001/categories/new', data)
       .then((response) => {
         if (response.status === 200) {
           setCategories([...categories, {
@@ -38,6 +38,20 @@ function Category() {
         console.log(error);
       });
   };
+
+  const deleteRow = (e) => {
+    e.preventDefault();
+    prompt("Etes-vous sur de vouloir supprimer cette catégorie?");
+    axios.delete('http://192.168.184.172:8001/categories')
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+        alert(`${error}`)
+      })
+
+  }
 
   const filterCategory = (tag, [setFunc, param]) => {
     if (param) {
@@ -75,7 +89,7 @@ function Category() {
               <tr key={[index]}>
                 <th scope="row" width="50%">{category.name}</th>
                 <td><button type="button" className="btn btn-primary btn-sm float-right">Editer</button></td>
-                <td><button type="button" className="btn btn-primary btn-sm float-right">Supprimer</button></td>
+                <td><button type="button" onClick={deleteRow} className="btn btn-primary btn-sm float-right">Supprimer</button></td>
               </tr>
             ))}
           </tbody>

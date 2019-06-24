@@ -15,13 +15,13 @@ function App() {
   return (
     <div>
       <NavbarAdmin />
-      <Route path="/login" exact component={Login} />
+      {/*<Route path="/login" exact component={Login} />
       <Route path="/homepage" exact component={Homepage} />
       <Route path="/category" exact component={Category} />
       <Route path="/questions" exact component={Questions} />
       <Route path="/clients" exact component={Patients} />
       <Route path="/client" exact component={Patient} />
-      <Route path="/RDV" exact component={RDV} />
+  <Route path="/RDV" exact component={RDV} />*/}
     </div>
   );
 }

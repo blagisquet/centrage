@@ -20,7 +20,7 @@ function Questions() {
 
   const deleteQuestion = (e) => {
     e.preventDefault();
-    axios.delete(`http://192.168.184.172:8000/question`)
+    axios.delete(`http://192.168.184.172:8001/question`)
       .then((response) => {
         console.log(response);
         prompt(`La question ${response.data.id} ${response.data.content} va être supprimée.`);
@@ -32,7 +32,7 @@ function Questions() {
   }
 
   useEffect(() => {
-    axios.get('http://192.168.184.172:8000/question')
+    axios.get('http://192.168.184.172:8001/question')
       .then((result) => {
         setQuestions(result.data);
       });
@@ -44,7 +44,7 @@ function Questions() {
     data.append('name', dataSend.name);
     data.append('category', dataSend.category);
     data.append('type', dataSend.type);
-    axios.post('http://192.168.184.172:8000/question/new', data)
+    axios.post('http://192.168.184.172:8001/question/new', data)
       .then((response) => {
         if (response.status === 200) {
           setQuestions([...questions, {
@@ -64,7 +64,7 @@ function Questions() {
   };
 
   useEffect(() => {
-    axios.get('http://192.168.184.172:8000/categories')
+    axios.get('http://192.168.184.172:8001/categories')
       .then((result) => {
         setCategories(result.data);
       });
