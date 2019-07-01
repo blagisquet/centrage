@@ -4,3 +4,14 @@
   margin-right: auto;
   margin-top: 10vmax;
 }
+
+.loadingDiv{
+  top:50%;
+  position: absolute;
+  left: 10%;
+}
+
+button{
+  border: none;
+  padding: 0;
+}

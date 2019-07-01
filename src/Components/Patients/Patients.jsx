@@ -10,13 +10,20 @@ function Patients() {
   const [filterName, setFilterName] = useState(false);
   const [filterGIR, setFilterGIR] = useState(false);
   const [redirect, setRedirect] = useState(false);
+  const [id, setId] = useState(0);
 
   useEffect(() => {
-    axios.get('http://192.168.8.158:8000/patient')
+    axios.get('http://192.168.184.172:8001/patients')
       .then((result) => {
         setClients(result.data);
       });
   }, []);
+
+  console.log(clients);
+  
+
+  console.log(mailArray);
+  
 
   const nameArray = (mail) => {
     if (mailArray.indexOf(mail) === -1) {
@@ -28,7 +35,18 @@ function Patients() {
     }
   };
 
-  const filterNames = (tag, [setFunc, param]) => {
+  const girFilter = ([setFunc, param]) => {
+    if (param) {
+      let filteredDesc = clients.sort((a, b) => b.datas[0].response - a.datas[0].response);
+      setClients(filteredDesc);
+    } else {
+      let filteredAsc = clients.sort((a, b) => a.datas[0].response - b.datas[0].response);
+      setClients(filteredAsc);
+    }
+    setFunc(!param);
+  };
+
+  const filterClients = (tag, [setFunc, param]) => {
     if (param) {
       setClients(clients.reverse());
     } else {
@@ -41,26 +59,29 @@ function Patients() {
     if (redirect) {
       return (
         <div>
-          <Redirect to="/client" />
+          <Redirect to={`/client/:${id}`} />
         </div>
       );
     }
     return null;
   };
 
+  if (!clients.length) {
+    return <div className='loadingDiv'> Loading ...</div>
+  }
+
   return (
     <div className="container-fluid">
       <div className="tableStyle">
         {renderRedirect()}
         {mailArray.length ? <button type="button" className="btn btn-primary btn-lg btn-block">envoyer email</button> : <button type="button" className="btn btn-light btn-lg btn-block" disabled>envoyer email</button>}
-
-        <table className="table table-hover table-bordered">
+        < table className="table table-hover table-bordered">
           <thead>
             <tr>
+              <th scope="col"><button type="button" onClick={() => filterClients('name', [setFilterName, filterName])}>Nom</button></th>
               <th scope="col">Prénom</th>
-              <th onClick={() => filterNames('name', [setFilterName, filterName])} scope="col">Nom</th>
               <th scope="col">Statut</th>
-              <th onClick={() => filterNames('GIR', [setFilterGIR, filterGIR])} scope="col">GIR</th>
+              <th onClick={() => girFilter([setFilterGIR, filterGIR])} scope="col">GIR</th>
               <th scope="col">Zone géographique</th>
               <th scope="col">Email</th>
             </tr>
@@ -68,15 +89,18 @@ function Patients() {
           <tbody>
             {clients.map((client, index) => (
               <tr key={[index]}>
-                <td>{client.name}</td>
                 <td>
-                  <button type="button" onClick={() => setRedirect(true)}>
+                  <button type="button" onClick={() => {
+                    setRedirect(true)
+                    setId(client.id)
+                  }}>
                     {client.lastName}
                   </button>
                 </td>
+                <td>{client.name}</td>
                 <td>Statut</td>
-                <td>GIR</td>
-                <td>{client.postalCode}</td>
+                <td>{client.datas[0].response}</td>
+                <td>{client.city}</td>
                 <td>
                   <input type="checkbox" onChange={() => nameArray(client.relativePerson.mail)} name="email" />
                 </td>
@@ -85,8 +109,7 @@ function Patients() {
           </tbody>
         </table>
       </div>
-
-    </div>
+    </div >
   );
 }
 

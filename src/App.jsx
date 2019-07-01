@@ -11,7 +11,7 @@ import Patient from './Components/Patient/Patient';
 import RDV from './Components/RDV/RDV';
 
 
-function App() {
+const App=()=> {
   return (
     <div>
       <NavbarAdmin />
@@ -20,7 +20,7 @@ function App() {
       <Route path="/category" exact component={Category} />
       <Route path="/questions" exact component={Questions} />
       <Route path="/clients" exact component={Patients} />
-      <Route path="/client" exact component={Patient} />
+      <Route path="/client/:id" exact component={Patient} />
       <Route path="/RDV" exact component={RDV} />
     </div>
   );
