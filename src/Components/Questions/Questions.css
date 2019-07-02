@@ -1,30 +1,73 @@
-#questions-style {
-  margin-top: 9vmax;
+
+@media screen and (max-width: 780px) {
+
+  .container {
+    max-width: 80%;
+  }
+  #questions-style {
+    margin-top: 9vmax;
+    width: 100%;
+  }
+
+  .inputWidth {
+    width: 200%;
+    margin: auto;
+  }
+
+  .selectWidth {
+    width: 50rem;
+    margin-top: 1rem;
+  }
+
+  .questionBut {
+    margin-top: 1rem;
+    margin-left: 65%;
+    margin-bottom: 1rem;
+    width: 20%;
+  }
+
+  .maxStyle {
+    margin-top: 1rem;
+  }
+
+  .question-table-style {
+    width: 80%;
+    margin-left: 1rem;
+    margin-right: 20rem;
+  }
+
 }
 
-.question-table-style {
-  min-width: 100% !important;
-  margin-left: auto;
-  margin-right: auto;
-}
+@media screen and (min-width:781px) and (max-width: 1920px) {
+  #questions-style {
+    margin-top: 9vmax;
+    width: 80%;
+  }
 
-.inputWidth {
-  width: 95%;
-  margin-left: 0.5rem;
-}
-
-.selectWidth {
-  width: 50rem;
-  margin-top: 1rem;
-}
-
-.questionBut {
-  margin-top: 1rem;
-  margin-left: 80%;
-  margin-bottom: 1rem;
-  width: 20%;
-}
-
-.maxStyle {
-  margin-top: 1rem;
+  .question-table-style {
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .inputWidth {
+    width: 400% !important;
+    margin: auto;
+  }
+  
+  .selectWidth {
+    width: 50rem;
+    margin-top: 1rem;
+  }
+  
+  .questionBut {
+    margin-top: 1rem;
+    margin-left: 72%;
+    margin-bottom: 1rem;
+    width: 20%;
+  }
+  
+  .maxStyle {
+    margin-top: 1rem;
+  }
 }

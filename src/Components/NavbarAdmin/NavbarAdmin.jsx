@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Category from '../Category/Category';
 import Homepage from '../Homepage/Homepage';
 import Login from '../Login/Login';
@@ -23,19 +23,19 @@ function NavbarAdmin() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="nav nav-tabs">
             <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
-              <Link to="/category"  className="nav-link">Catégorie</Link>
+              <Link to="/category" className="nav-link">Catégorie</Link>
             </li>
             <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
-              <Link to="/questions"  className="nav-link">Questions</Link>
+              <Link to="/questions" className="nav-link">Questions</Link>
             </li>
             <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
-              <Link to="/clients"  className="nav-link">Clients</Link>
+              <Link to="/clients" className="nav-link">Clients</Link>
             </li>
             <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
-              <Link to="/rdv"  className="nav-link">RDV</Link>
+              <Link to="/rdv" className="nav-link">RDV</Link>
             </li>
             <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
-              <Link to="/login"  className="nav-link login">Login</Link>
+              <Link to="/login" className="nav-link login">Login</Link>
             </li>
           </ul>
         </div>
