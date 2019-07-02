@@ -7,13 +7,18 @@ function Patient(props) {
   const [name, setName] = useState();
   const [proche, setProche] = useState();
   const [confiance, setConfiance] = useState();
-  const [key, setKey] = useState([]);
-  const [moda, setModa] = useState(false);
-  const [modb, setModb] = useState(false);
-  const [modc, setModc] = useState(false);
-  const [modd, setModd] = useState(false);
-  const [nume, setNume] = useState(name);
-  const [filter, setFilter] = useState('select an option');
+  const [a, setA] = useState(false);
+  const [b, setB] = useState(false);
+  const [c, setC] = useState(false);
+  const [d, setD] = useState(false);
+  const [rue, setRue] = useState();
+  const [code, setCode] = useState();
+  const [city, setCity] = useState();
+
+  const dataSend = {
+    address: rue === '' ? name.address : rue,
+    postalCode: code === '' ? name.postalCode : parseFloat(code),
+  };
 
   useEffect(() => {
     axios.get(`http://192.168.184.172:8001/patients/${client}`)
@@ -21,55 +26,58 @@ function Patient(props) {
         setName(result.data);
         setProche(result.data.relativePerson);
         setConfiance(result.data.trustedPerson);
+        setRue(result.data.address === undefined ? '' : result.data.address);
+        setCode(result.data.postalCode);
+        setCity(result.data.city);
       });
   }, [client]);
 
-  useEffect(() => {
-    if (name) setKey(Object.keys(name));
-  }, [name]);
+  const subMit = (e) => {
+    e.preventDefault();
+    const data = new FormData();
+    data.append('address', dataSend.address);
+    data.append('postalCode', dataSend.postalCode);
+    //first method for FormData()
+    // for (let pair of data.entries()) {
+    //   console.log(pair[0] + ': ' + pair[1]);
+    // }
+    //second method for FormData()
+    for (let [key, value] of data.entries()) {
+      console.log(`${key}: ${value}`);
+    }
 
-  const hCa = () => {
-    setModa(true)
+    // console.log(data);
+
+    axios.post(`http://192.168.184.172:8001/patients/update/${client}`, data
+      // ,
+      //   {
+      //     headers: {
+      //       'Content-Type': 'application/x-www-form-urlencoded'
+      //     }
+      //   }
+    )
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  }
+
+  const changeTrue = (setHook) => {
+    setHook(true);
   };
-  const hCb = () => {
-    setModb(true)
-  };
-  const hCc = () => {
-    setModc(true)
-  };
-  const hCd = () => {
-    setModd(true)
-  };
-  const cAa = () => {
-    setModa(false);
+
+  const changeFalse = (setHook) => {
+    setHook(false);
   };
 
   const capitalize = (string) => {
+    if (string === undefined) {
+      return '';
+    }
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
   };
-
-  const subMit = () => {
-    console.log('buton');
-    setModa(!moda);
-  };
-
-  const handleSelection = (event) => {
-		setFilter(event.target.value);
-  };
-
-  const getFilteredList = () => {
-		if (filter === "select an option") {
-			return key;
-		} else {
-			return key.filter(info => info === filter);
-		}
-	};
-  
-  console.log(getFilteredList());
-  
-
-
-  // name || proche || confiance ? console.log(name, '\n', proche, '\n', confiance) : console.log('unavailable');
 
   if (!name || !proche || !confiance) {
     return <div className='loadingDiv'> Loading ...</div>
@@ -79,15 +87,6 @@ function Patient(props) {
     <div className="container-fluid">
       <div className="cardDisplay row">
         <div className=" col-12 mb-5"><strong>{capitalize(name.name)} {capitalize(name.lastName)}</strong></div>
-        <div className="form-group col-12">
-          <label htmlFor="exampleFormControlSelect1">Example select</label>
-          <select className="form-control" id="exampleFormControlSelect1" onChange={handleSelection}>
-            <option defaultValue>select an option</option>
-            {key.map((info, index) =>
-              <option key={index} value={info}>{info}</option>
-            )}
-          </select>
-        </div>
         <div className="col-sm-12 mb-3">
           <div className="card">
             <div className="card-header">
@@ -98,82 +97,93 @@ function Patient(props) {
               <div className="bloc-item-row">
                 <div className="bloc-item-content">
                   <div>
-                    <span className="label-placeholder-title">Adresse du client :</span>
-
-                    {moda ? <input
+                    <span className="label-placeholder-title">Adresse du client: Rue</span>
+                    {a ? <input
                       className="label-content"
                       type="text"
-                      id="name"
-                      name="name"
-                      onChange={(event) => setNume(event.target.value)}
-                      value={`${capitalize(name.city)}`}
-                      placeholder={name.name} /> :
-                      <span id="consumption-address" className="label-content">{name.adress}, {name.postalCode} {capitalize(name.city)}</span>}
+                      id="rue"
+                      name="rue"
+                      onChange={(event) => setRue(event.target.value)}
+                      value={rue}
+                      placeholder={'nom de rue'} /> :
+                      <span id="consumption-address" className="label-content">{name.address}</span>}
                   </div>
                 </div>
                 <div className="bloc-item-action">
-                  <button className="btn btn-primary float-right ml-3" onClick={moda ? subMit : hCa}>{moda ? 'send' : 'edit'}</button>
-                  {moda ? <button className="btn btn-primary float-right" onClick={cAa}>cancel</button> : <div />}
+                  <button className={`btn float-right btn-sm ml-3 ${a ? "btn-success" : "btn-primary"}`}
+                    onClick={a ? (e) => {
+                      subMit(e);
+                      setA(false);
+                    }
+                      :
+                      () => changeTrue(setA)}>{a ? 'Send' : 'Edit'}</button>
+                  {a ? <button className="btn btn-info btn-sm float-right" onClick={() => changeFalse(setA)}>Cancel</button> : <div />}
                 </div>
               </div>
 
               <div className="bloc-item-row">
                 <div className="bloc-item-content">
                   <div>
-                    <span className="label-placeholder-title">info1 du client :</span>
-                    {modb ? <input
+                    <span className="label-placeholder-title">Adresse du client: Code</span>
+                    {b ? <input
                       className="label-content"
                       type="text"
-                      id="name"
-                      name="name"
-                      onChange={(event) => setNume(event.target.value)}
-                      value={nume}
-                      placeholder={name.name} /> :
-                      <span id="consumption-address" className="label-content">{name.adress}, {name.postalCode} {capitalize(name.city)}</span>}
+                      id="code"
+                      name="code"
+                      onChange={(event) => setCode(event.target.value)}
+                      value={code}
+                      placeholder={'code postal'} /> :
+                      <span id="consumption-address" className="label-content"> {name.postalCode} </span>}
                   </div>
                 </div>
                 <div className="bloc-item-action">
-                  <button className="btn btn-primary float-right" onClick={hCb}>Edit</button>
+                  <button className={`btn float-right btn-sm ml-3 ${b ? "btn-success" : "btn-primary"}`} onClick={b ? (e) => {
+                    subMit(e);
+                    setB(false);
+                  }
+                    :
+                    () => changeTrue(setB)}>{b ? 'Send' : 'Edit'}</button>
+                  {b ? <button className="btn btn-info btn-sm float-right" onClick={() => changeFalse(setB)}>Cancel</button> : <div />}
                 </div>
               </div>
 
               <div className="bloc-item-row">
                 <div className="bloc-item-content">
                   <div>
-                    <span className="label-placeholder-title">info2 du client :</span>
-                    {modc ? <input
+                    <span className="label-placeholder-title">Adresse du client: Ville</span>
+                    {c ? <input
                       className="label-content"
                       type="text"
                       id="name"
                       name="name"
-                      onChange={(event) => setNume(event.target.value)}
-                      value={nume}
+                      // onChange={(event) => setNume(event.target.value)}
+                      // value={nume}
                       placeholder={name.name} /> :
                       <span id="consumption-address" className="label-content">{name.adress}, {name.postalCode} {capitalize(name.city)}</span>}
                   </div>
                 </div>
                 <div className="bloc-item-action">
-                  <button className="btn btn-primary float-right" onClick={hCc}>Edit</button>
+                  <button className="btn btn-sm btn-primary float-right" >Edit</button>
                 </div>
               </div>
 
               <div className="bloc-item-row">
                 <div className="bloc-item-content">
                   <div>
-                    <span className="label-placeholder-title">info2 du client :</span>
-                    {modd ? <input
+                    <span className="label-placeholder-title">Info du client :</span>
+                    {d ? <input
                       className="label-content"
                       type="text"
                       id="name"
                       name="name"
-                      onChange={(event) => setNume(event.target.value)}
-                      value={nume}
+                      // onChange={(event) => setNume(event.target.value)}
+                      // value={nume}
                       placeholder={name.name} /> :
                       <span id="consumption-address" className="label-content">{name.adress}, {name.postalCode} {capitalize(name.city)}</span>}
                   </div>
                 </div>
                 <div className="bloc-item-action">
-                  <button className="btn btn-primary float-right" onClick={hCd}>Edit</button>
+                  <button className="btn btn-sm btn-primary float-right" >Edit</button>
                 </div>
               </div>
             </div>
@@ -183,7 +193,7 @@ function Patient(props) {
         <div className="col-sm-6 ">
           <div className="card">
             <div className="card-header">
-              Proche
+              Informations sur le proche
             </div>
             <div className="card-body">
               <h6 className="card-title">Nom: {capitalize(proche.name)}</h6>
@@ -197,7 +207,7 @@ function Patient(props) {
         <div className="col-sm-6">
           <div className="card">
             <div className="card-header">
-              Personne confiance
+              Informations sur la personne de confiance
             </div>
             <div className="card-body">
               <h6 className="card-title">Nom: {capitalize(confiance.name)} </h6>

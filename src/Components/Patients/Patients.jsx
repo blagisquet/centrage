@@ -19,11 +19,8 @@ function Patients() {
       });
   }, []);
 
-  console.log(clients);
-  
-
-  console.log(mailArray);
-  
+  //console.log(clients);
+  //console.log(mailArray);
 
   const nameArray = (mail) => {
     if (mailArray.indexOf(mail) === -1) {
@@ -81,7 +78,7 @@ function Patients() {
               <th scope="col"><button type="button" onClick={() => filterClients('name', [setFilterName, filterName])}>Nom</button></th>
               <th scope="col">Prénom</th>
               <th scope="col">Statut</th>
-              <th onClick={() => girFilter([setFilterGIR, filterGIR])} scope="col">GIR</th>
+              <th scope="col"><button type="button" className="buttonGir" onClick={() => girFilter([setFilterGIR, filterGIR])}> GIR</button></th>
               <th scope="col">Zone géographique</th>
               <th scope="col">Email</th>
             </tr>

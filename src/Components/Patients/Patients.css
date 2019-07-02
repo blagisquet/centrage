@@ -14,4 +14,15 @@
 button{
   border: none;
   padding: 0;
+  font-weight: bold;
 }
+
+button:focus {outline:0;}
+
+.buttonGir{
+  border: none;
+  padding: 0;
+  font-weight: bold;
+}
+
+.buttonGir:focus{outline:0;}
