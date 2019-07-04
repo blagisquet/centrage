@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import _ from 'underscore';
 import './Questions.css';
-import { arrayExpression } from '@babel/types';
 
 function Questions() {
   const [questions, setQuestions] = useState([]);
@@ -34,18 +33,22 @@ function Questions() {
 
   const modifyForm = (e, index) => {
     e.preventDefault();
-
     const data = new FormData();
     data.append('content', dataModif.questName);
     data.append('category', dataModif.questCat);
     data.append('type', dataModif.questType);
-
-    console.log(data)
     for (let [key, value] of data.entries()) {
       console.log(`${key}: ${value}`);
     }
     axios.post(`http://192.168.184.172:8001/questions/update/${questId}`, data)
       .then((response) => {
+        if (response.status === 200) {
+          let questTemp = [...questions];
+          questTemp[index].content = questName;
+          setQuestions(questTemp);
+          questTemp[index].category.name = questCat;
+          setQuestions(questTemp);
+        }
         handleChange(index)
       })
       .catch((error) => {
@@ -71,7 +74,6 @@ function Questions() {
     axios.delete(`http://192.168.184.172:8001/questions/${questId}`)
       .then((response) => {
         console.log(index);
-        arrayExpression.splice(index);
       })
       .catch((error) => {
         console.log(error);
@@ -98,7 +100,7 @@ function Questions() {
     data.append('name', dataSend.name);
     data.append('category', dataSend.category);
     data.append('type', dataSend.type);
-    axios.post('http://192.168.184.172:8001/questions/id', data)
+    axios.post('http://192.168.184.172:8001/questions/', data)
       .then((response) => {
         if (response.status === 201) {
           setQuestions([...questions, {

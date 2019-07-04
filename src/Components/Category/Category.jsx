@@ -34,13 +34,24 @@ function Category() {
       console.log(`${key}: ${value}`);
     }
     axios.post(`http://192.168.184.172:8001/categories/update/${catId}`, data)
-    .then((response) => {
-      console.log(response);
-      handleChange(index);
-    })
-    .catch((error) => {
-      console.log(error);
-    })
+      .then((response) => {
+        console.log(response);
+        if (response.status === 200) {
+          //setCategories([...categories, {
+           // id: response.data.id,
+           // name: category,
+       //   },
+         // ]);
+         let catTemp = [...categories];
+         catTemp[index].name = cat;
+         setCategories(catTemp);
+          handleChange(index);
+
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      })
   }
 
   useEffect(() => {
@@ -60,7 +71,7 @@ function Category() {
     e.preventDefault();
     const data = new FormData();
     data.append('name', catSend.category);
-    axios.post('http://192.168.184.172:8001/categories/id', data)
+    axios.post('http://192.168.184.172:8001/categories/', data)
       .then((response) => {
         if (response.status === 201) {
           setCategories([...categories, {
@@ -75,11 +86,13 @@ function Category() {
       });
   };
 
-  const deleteRow = (e) => {
+  const deleteRow = (e, index) => {
     e.preventDefault();
-    axios.delete('http://192.168.184.172:8001/categories/id')
+    const data = new FormData();
+    data.append('index', catSend.category);
+    axios.delete(`http://192.168.184.172:8001/categories/${catId}`, data)
       .then((response) => {
-        console.log(response);
+        console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -131,9 +144,9 @@ function Category() {
                     value={cat}
                     placeholder={category.name} /> : <div>{category.name} {modif[index]}</div>
                   }
-                {/*{category.name}*/}</th>
+                  {/*{category.name}*/}</th>
                 <td><button type="button" onClick={modif[index] ? (event) => modifyForm(event, index) : () => handleChange(index)} className="btn btn-primary btn-sm float-right">{modif[index] ? 'Valider' : 'Editer'}</button></td>
-                <td><button type="button" onClick={deleteRow} className="btn btn-primary btn-sm float-right">Supprimer</button></td>
+                <td><button type="button" onClick={deleteRow[index]} className="btn btn-primary btn-sm float-right">Supprimer</button></td>
               </tr>
             ))}
           </tbody>
