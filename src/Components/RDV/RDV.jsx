@@ -10,7 +10,7 @@ function RDV() {
   const [filterHours, setFilterHours] = useState([false]);
 
   useEffect(() => {
-    axios.get('http://192.168.8.158:8000/rdv')
+    axios.get('http://192.168.184.172:8001/patients/rdv')
       .then((result) => {
         setRdv(result.data);
       });
@@ -49,7 +49,7 @@ function RDV() {
               <td>{rendez.relativePerson.lastName}</td>
               <td>{rendez.relativePerson.name}</td>
               <td>{rendez.relativePerson.phone}</td>
-              <td>{rendez.hours}</td>
+              <td>{rendez.availability}</td>
             </tr>
           ))}
         </tbody>

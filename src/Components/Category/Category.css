@@ -10,8 +10,14 @@
   
 }
 
+.catClass {
+  display: flex;
+  justify-content: center;
+  width: 85%;
+}
+
 .button-style {
-  margin-left: 97rem;
+  width: 180%;
 }
 
 h1 {
