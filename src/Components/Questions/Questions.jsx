@@ -10,18 +10,16 @@ function Questions() {
   const [questName, setQuestName] = useState('');
   const [questCat, setQuestCat] = useState('');
   const [questType, setQuestType] = useState('');
-  const [questMin, setQuestMin] = useState(0);
-  const [questMax, setQuestMax] = useState(0);
   const [name, setName] = useState(questName);
   const [category, setCategory] = useState(questCat);
   const [type, setType] = useState(questType);
-  const [min, setMin] = useState(questMin);
-  const [max, setMax] = useState(questMax);
+  const [min, setMin] = useState();
+  const [max, setMax] = useState();
   const [modif, setModif] = useState([]);
   const [questId, setQuestId] = useState('');
 
   const handleChange = (index) => {
-    let temp = [...modif];
+    const temp = [...modif];
     temp[index] = !temp[index];
     setModif(temp);
     setQuestName(questions[index].content);
@@ -30,41 +28,35 @@ function Questions() {
     setQuestId(questions[index].id);
   };
 
+  const dataModif = {
+    modQuestName: questName,
+    modQuestCat: questCat,
+    modQuestType: questType,
+  };
+
   const modifyForm = (e, index) => {
     e.preventDefault();
     const data = new FormData();
-    data.append('content', dataModif.questName);
-    data.append('category', dataModif.questCat);
-    data.append('type', dataModif.questType);
-    for (let [key, value] of data.entries()) {
-      console.log(`${key}: ${value}`);
-    }
+    data.append('content', dataModif.modQuestName);
+    data.append('category', dataModif.modQuestCat);
+    data.append('type', dataModif.modQuestType);
     axios.post(`http://192.168.184.172:8001/questions/update/${questId}`, data)
       .then((response) => {
         if (response.status === 200) {
-          let questTemp = [...questions];
+          const questTemp = [...questions];
           questTemp[index].content = questName;
           setQuestions(questTemp);
           questTemp[index].category.name = questCat;
           setQuestions(questTemp);
         }
-        handleChange(index)
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-  }
-
-  const dataModif = {
-    questName: questName,
-    questCat: questCat,
-    questType: questType
-  }
+        handleChange(index);
+      });
+  };
 
   const dataSend = {
-    name: name,
-    category: category,
-    type: type + '(' + min + ',' + max + ')',
+    dataName: name,
+    dataCategory: category,
+    dataType: `${type}(${min},${max})`,
   };
 
   const deleteQuestion = (e, index) => {
@@ -72,13 +64,10 @@ function Questions() {
     const data = new FormData();
     data.append('index', index);
     axios.delete(`http://192.168.184.172:8001/questions/${index}`, data)
-      .then((response) => {
-        let delQTemp = [...questions];
+      .then(() => {
+        const delQTemp = [...questions];
         delQTemp.splice(index, 1);
         setQuestions(delQTemp);
-      })
-      .catch((error) => {
-        console.log(error);
       });
   };
 
@@ -87,28 +76,27 @@ function Questions() {
       .then((result) => {
         setQuestions(result.data);
         setQuestId(result.data.id);
-        console.log(result.data.length);
         let temp = [];
-        for (let i = 0; i <= result.data.length; i++) {
-          temp = [...temp, false]
+        for (let i = 0; i <= result.data.length; i += 1) {
+          temp = [...temp, false];
         }
-        setModif(temp)
+        setModif(temp);
       });
   }, []);
 
   const submit = (e) => {
     e.preventDefault();
     const data = new FormData();
-    data.append('name', dataSend.name);
-    data.append('category', dataSend.category);
-    data.append('type', dataSend.type);
+    data.append('name', dataSend.dataName);
+    data.append('category', dataSend.dataCategory);
+    data.append('type', dataSend.dataType);
     axios.post('http://192.168.184.172:8001/questions/', data)
       .then((response) => {
         if (response.status === 201) {
           setQuestions([...questions, {
             id: response.data.id,
             content: name,
-            type: type,
+            datType: type,
             category: {
               name: category,
             },
@@ -148,22 +136,22 @@ function Questions() {
         </div>
         <div className="row">
           <div className="form-row align-items-center col-md-6">
-            <label htmlFor="inputState">
+            <label htmlFor="catSelect">
               Catégorie
-              <select id="inputState" className="form-control" onChange={e => setCategory(e.target.value)}>
+              <select id="catSelect" className="form-control" onChange={e => setCategory(e.target.value)}>
                 <option defaultValue>Choix catégorie</option>
-                {categories.map((category, index) => (
+                {categories.map((mapCategory, index) => (
                   <option key={[index]}>
-                    {category.name}
+                    {mapCategory.name}
                   </option>
                 ))}
               </select>
             </label>
           </div>
           <div className="form-row align-items-center col-md-6">
-            <label htmlFor="inputState">
+            <label htmlFor="typeQuest">
               Type de question
-              <select id="inputState" className="form-control" onChange={e => setType(e.target.value)}>
+              <select id="typeQuest" className="form-control" onChange={e => setType(e.target.value)}>
                 {/* {questions.map((question, index) => (
               <option key={[index]}>
                 {question.type}
@@ -208,33 +196,56 @@ function Questions() {
           {questions.map((question, index) => (
             <tr key={[index]}>
               <th scope="row">
-                {modif[index] ? <input
-                  type="text"
-                  id="questName"
-                  name="questName"
-                  onChange={(event) => setQuestName(event.target.value)}
-                  value={questName}
-                  placeholder={question.content} /> : <div>{question.content} {modif[index]}</div>}
+                {
+                  modif[index]
+                    ? (
+                      <input
+                        type="text"
+                        id="questName"
+                        name="questName"
+                        onChange={event => (setQuestName(event.target.value))}
+                        value={questName}
+                        placeholder={question.content}
+                      />
+                    )
+                    : (
+                      <div>
+                        {question.content}
+                        {modif[index]}
+                      </div>
+                    )
+                }
               </th>
               <td>
-                {modif[index] ? <select
-                  id="inputState"
-                  className="form-control"
-                  onChange={e => setQuestCat(e.target.value)}>
-                  <option defaultValue>Choix catégorie</option>
-                  {categories.map((category, index) => (
-                    <option key={[index]}>
-                      {category.name}
-                    </option>
-                  ))}
-                </select> : <div>{question.category.name}</div>}
+                {modif[index]
+                  ? (
+                    <select
+                      id="inputState"
+                      className="form-control"
+                      onChange={e => setQuestCat(e.target.value)}
+                    >
+                      <option defaultValue>Choix catégorie</option>
+                      {categories.map((mapCategory, catIndex) => (
+                        <option key={[catIndex]}>
+                          {mapCategory.name}
+                        </option>
+                      ))}
+                    </select>
+                  )
+                  : (
+                    <div>
+                      {question.category.name}
+                    </div>
+                  )
+                }
+              </td>
+              <td>{question.type}</td>
+              <td>
+                <button type="button" onClick={modif[index] ? event => modifyForm(event, index) : () => handleChange(index)} className="btn btn-primary btn-sm float-right">{modif[index] ? 'Valider' : 'Editer'}</button>
               </td>
               <td>
-                {question.type}</td>
-              <td><button type="button" onClick={modif[index] ? (event) => modifyForm(event, index) : () =>
-
-                handleChange(index)} className="btn btn-primary btn-sm float-right">{modif[index] ? 'Valider' : 'Editer'}</button></td>
-              <td><button type="button" onClick={(e) => deleteQuestion(e, question.id)} className="btn btn-primary btn-sm float-right">Supprimer</button></td>
+                <button type="button" onClick={e => deleteQuestion(e, index)} className="btn btn-primary btn-sm float-right">Supprimer</button>
+              </td>
             </tr>
           ))}
         </tbody>

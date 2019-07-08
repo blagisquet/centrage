@@ -8,10 +8,10 @@ function Category() {
   const [categories, setCategories] = useState([]);
   const [filterName, setFilterName] = useState([false]);
   const [category, setCategory] = useState([]);
-  const catSend = { category: category };
   const [modif, setModif] = useState([]);
   const [cat, setCat] = useState();
   const [catId, setCatId] = useState('');
+
   const handleChange = (index) => {
     const temp = [...modif];
     temp[index] = !temp[index];
@@ -21,16 +21,17 @@ function Category() {
   };
 
   const dataModif = {
-    cat: cat
+    dataCat: cat,
+  };
+
+  const catSend = {
+    dataCategory: category,
   };
 
   const modifyForm = (e, index) => {
     e.preventDefault();
     const data = new FormData();
-    data.append('name', dataModif.cat);
-    for (const [key, value] of data.entries()) {
-      console.log(`${key}: ${value}`);
-    }
+    data.append('name', dataModif.dataCat);
     axios.post(`http://192.168.184.172:8001/categories/update/${catId}`, data)
       .then((response) => {
         if (response.status === 200) {
@@ -39,9 +40,6 @@ function Category() {
           setCategories(catTemp);
           handleChange(index);
         }
-      })
-      .catch((error) => {
-        console.log(error);
       });
   };
 
@@ -51,7 +49,7 @@ function Category() {
         setCategories(result.data);
         setCatId(result.data.id);
         let temp = [];
-        for (let i = 0; i <= result.data.length; i + 1) {
+        for (let i = 0; i <= result.data.length; i += 1) {
           temp = [...temp, false];
         }
         setModif(temp);
@@ -61,7 +59,7 @@ function Category() {
   const submit = (e) => {
     e.preventDefault();
     const data = new FormData();
-    data.append('name', catSend.category);
+    data.append('name', catSend.dataCategory);
     axios.post('http://192.168.184.172:8001/categories/', data)
       .then((response) => {
         if (response.status === 201) {
@@ -71,9 +69,6 @@ function Category() {
           },
           ]);
         }
-      })
-      .catch((error) => {
-        console.log(error);
       });
   };
 
@@ -82,13 +77,10 @@ function Category() {
     const data = new FormData();
     data.append('index', index);
     axios.delete(`http://192.168.184.172:8001/categories/${index}`, data)
-      .then((response) => {
+      .then(() => {
         const delTemp = [...categories];
         delTemp.splice(index, 1);
         setCategories(delTemp);
-      })
-      .catch((error) => {
-        console.log(error);
       });
   };
 
@@ -126,26 +118,20 @@ function Category() {
             </tr>
           </thead>
           <tbody>
-            {categories.map((category, index) => (
+            {categories.map((catCategory, index) => (
               <tr key={[index]}>
                 <th scope="row" width="50%">
-                  {modif[index] ? <input
-                    type="text"
-                    id="cat"
-                    name="cat"
-                    onChange={(event) => setCat(event.target.value)}
-                    value={cat}
-                    placeholder=
-                    {category.name} /> 
-                    :
+                  {modif[index] ? (<input type="text" id="cat" name="cat" onChange={event => setCat(event.target.value)} value={cat} placeholder={category.name} />)
+                    : (
                       <div>
-                        {category.name}
+                        {catCategory.name}
                         {modif[index]}
                       </div>
+                    )
                   }
                 </th>
                 <td><button type="button" onClick={modif[index] ? event => modifyForm(event, index) : () => handleChange(index)} className="btn btn-primary btn-sm float-right">{modif[index] ? 'Valider' : 'Editer'}</button></td>
-                <td><button type="button" onClick={(e) => deleteRow(e, category.id)} className="btn btn-primary btn-sm float-right">Supprimer</button></td>
+                <td><button type="button" onClick={e => deleteRow(e, category.id)} className="btn btn-primary btn-sm float-right">Supprimer</button></td>
               </tr>
             ))}
           </tbody>

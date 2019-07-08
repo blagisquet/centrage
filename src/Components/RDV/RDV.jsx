@@ -49,7 +49,7 @@ function RDV() {
               <td>{rendez.relativePerson.lastName}</td>
               <td>{rendez.relativePerson.name}</td>
               <td>{rendez.relativePerson.phone}</td>
-              <td>{rendez.hours}</td>
+              <td>{rendez.availability}</td>
             </tr>
           ))}
         </tbody>
