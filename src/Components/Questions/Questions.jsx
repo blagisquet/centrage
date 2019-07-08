@@ -21,7 +21,6 @@ function Questions() {
   const [questId, setQuestId] = useState('');
 
   const handleChange = (index) => {
-    console.log(index)
     let temp = [...modif];
     temp[index] = !temp[index];
     setModif(temp);
@@ -70,10 +69,13 @@ function Questions() {
 
   const deleteQuestion = (e, index) => {
     e.preventDefault();
-    console.log(questId);
-    axios.delete(`http://192.168.184.172:8001/questions/${questId}`)
+    const data = new FormData();
+    data.append('index', index);
+    axios.delete(`http://192.168.184.172:8001/questions/${index}`, data)
       .then((response) => {
-        console.log(index);
+        let delQTemp = [...questions];
+        delQTemp.splice(index, 1);
+        setQuestions(delQTemp);
       })
       .catch((error) => {
         console.log(error);
@@ -204,7 +206,7 @@ function Questions() {
         </thead>
         <tbody>
           {questions.map((question, index) => (
-            <tr key={index}>
+            <tr key={[index]}>
               <th scope="row">
                 {modif[index] ? <input
                   type="text"
@@ -213,7 +215,7 @@ function Questions() {
                   onChange={(event) => setQuestName(event.target.value)}
                   value={questName}
                   placeholder={question.content} /> : <div>{question.content} {modif[index]}</div>}
-                {/*{question.content}*/}</th>
+              </th>
               <td>
                 {modif[index] ? <select
                   id="inputState"
@@ -226,13 +228,13 @@ function Questions() {
                     </option>
                   ))}
                 </select> : <div>{question.category.name}</div>}
-                </td>
+              </td>
               <td>
                 {question.type}</td>
               <td><button type="button" onClick={modif[index] ? (event) => modifyForm(event, index) : () =>
 
                 handleChange(index)} className="btn btn-primary btn-sm float-right">{modif[index] ? 'Valider' : 'Editer'}</button></td>
-              <td><button type="button" onClick={deleteQuestion[index]} className="btn btn-primary btn-sm float-right">Supprimer</button></td>
+              <td><button type="button" onClick={(e) => deleteQuestion(e, question.id)} className="btn btn-primary btn-sm float-right">Supprimer</button></td>
             </tr>
           ))}
         </tbody>

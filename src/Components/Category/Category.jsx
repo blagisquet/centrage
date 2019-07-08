@@ -13,8 +13,7 @@ function Category() {
   const [cat, setCat] = useState();
   const [catId, setCatId] = useState('');
   const handleChange = (index) => {
-    console.log(index);
-    let temp = [...modif];
+    const temp = [...modif];
     temp[index] = !temp[index];
     setModif(temp);
     setCat(categories[index].name);
@@ -23,36 +22,28 @@ function Category() {
 
   const dataModif = {
     cat: cat
-  }
+  };
 
   const modifyForm = (e, index) => {
     e.preventDefault();
     const data = new FormData();
     data.append('name', dataModif.cat);
-    console.log(catId);
-    for (let [key, value] of data.entries()) {
+    for (const [key, value] of data.entries()) {
       console.log(`${key}: ${value}`);
     }
     axios.post(`http://192.168.184.172:8001/categories/update/${catId}`, data)
       .then((response) => {
-        console.log(response);
         if (response.status === 200) {
-          //setCategories([...categories, {
-           // id: response.data.id,
-           // name: category,
-       //   },
-         // ]);
-         let catTemp = [...categories];
-         catTemp[index].name = cat;
-         setCategories(catTemp);
+          const catTemp = [...categories];
+          catTemp[index].name = cat;
+          setCategories(catTemp);
           handleChange(index);
-
         }
       })
       .catch((error) => {
         console.log(error);
-      })
-  }
+      });
+  };
 
   useEffect(() => {
     axios.get('http://192.168.184.172:8001/categories')
@@ -60,10 +51,10 @@ function Category() {
         setCategories(result.data);
         setCatId(result.data.id);
         let temp = [];
-        for (let i = 0; i <= result.data.length; i++) {
-          temp = [...temp, false]
+        for (let i = 0; i <= result.data.length; i + 1) {
+          temp = [...temp, false];
         }
-        setModif(temp)
+        setModif(temp);
       });
   }, []);
 
@@ -89,10 +80,12 @@ function Category() {
   const deleteRow = (e, index) => {
     e.preventDefault();
     const data = new FormData();
-    data.append('index', catSend.category);
-    axios.delete(`http://192.168.184.172:8001/categories/${catId}`, data)
+    data.append('index', index);
+    axios.delete(`http://192.168.184.172:8001/categories/${index}`, data)
       .then((response) => {
-        console.log(response.data);
+        const delTemp = [...categories];
+        delTemp.splice(index, 1);
+        setCategories(delTemp);
       })
       .catch((error) => {
         console.log(error);
@@ -115,8 +108,8 @@ function Category() {
           <div className="col-6">
             <label className="sr-only" htmlFor="category">
               Catégorie
+              <input type="text" className="form-control mb-2" id="category" onChange={e => setCategory(e.target.value)} placeholder="Nom de la catégorie" />
             </label>
-            <input type="text" className="form-control mb-2" id="category" onChange={e => setCategory(e.target.value)} placeholder="Nom de la catégorie" />
           </div>
           <div className="col-3">
             <button type="submit" onClick={submit} className="button-style btn btn-success mb-2">Ajouter une catégorie</button>
@@ -142,11 +135,17 @@ function Category() {
                     name="cat"
                     onChange={(event) => setCat(event.target.value)}
                     value={cat}
-                    placeholder={category.name} /> : <div>{category.name} {modif[index]}</div>
+                    placeholder=
+                    {category.name} /> 
+                    :
+                      <div>
+                        {category.name}
+                        {modif[index]}
+                      </div>
                   }
-                  {/*{category.name}*/}</th>
-                <td><button type="button" onClick={modif[index] ? (event) => modifyForm(event, index) : () => handleChange(index)} className="btn btn-primary btn-sm float-right">{modif[index] ? 'Valider' : 'Editer'}</button></td>
-                <td><button type="button" onClick={deleteRow[index]} className="btn btn-primary btn-sm float-right">Supprimer</button></td>
+                </th>
+                <td><button type="button" onClick={modif[index] ? event => modifyForm(event, index) : () => handleChange(index)} className="btn btn-primary btn-sm float-right">{modif[index] ? 'Valider' : 'Editer'}</button></td>
+                <td><button type="button" onClick={(e) => deleteRow(e, category.id)} className="btn btn-primary btn-sm float-right">Supprimer</button></td>
               </tr>
             ))}
           </tbody>
