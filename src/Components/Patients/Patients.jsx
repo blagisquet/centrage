@@ -11,6 +11,13 @@ function Patients() {
   const [filterGIR, setFilterGIR] = useState(false);
   const [redirect, setRedirect] = useState(false);
   const [id, setId] = useState(0);
+  const [a, setA] = useState(false);
+  const [mail, setMail] = useState('');
+
+  const dataSend = {
+    email: mail,
+    listEmail: mailArray,
+  };
 
   useEffect(() => {
     axios.get('http://192.168.184.172:8001/patients')
@@ -19,25 +26,49 @@ function Patients() {
       });
   }, []);
 
-  //console.log(clients);
-  //console.log(mailArray);
+  // console.log(clients);
+  // console.log(mailArray);
 
-  const nameArray = (mail) => {
-    if (mailArray.indexOf(mail) === -1) {
-      setMailArray([...mailArray, mail]);
+  const subMit = (e) => {
+    e.preventDefault();
+    const data = new FormData();
+    data.append('email', dataSend.email);
+    data.append('listEmail', dataSend.listEmail);
+
+    // for (let [key, value] of data.entries()) {
+    //   console.log(`${key}: ${value}`);
+    // }
+
+    axios.post('http://192.168.184.172:8001/patients/email', data)
+      .then((response) => {
+        // eslint-disable-next-line no-console
+        console.log(response);
+      })
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.log(error);
+      });
+    setMail('');
+    setMailArray([]);
+    setTimeout(window.location.reload.bind(window.location), 500);
+  };
+
+  const nameArray = (email) => {
+    if (mailArray.indexOf(email) === -1) {
+      setMailArray([...mailArray, email]);
     } else {
       const newEmail = [...mailArray];
-      newEmail.splice(newEmail.indexOf(mail), 1);
+      newEmail.splice(newEmail.indexOf(email), 1);
       setMailArray(newEmail);
     }
   };
 
   const girFilter = ([setFunc, param]) => {
     if (param) {
-      let filteredDesc = clients.sort((a, b) => b.datas[0].response - a.datas[0].response);
+      const filteredDesc = clients.sort((a1, b1) => b1.datas[0].response - a1.datas[0].response);
       setClients(filteredDesc);
     } else {
-      let filteredAsc = clients.sort((a, b) => a.datas[0].response - b.datas[0].response);
+      const filteredAsc = clients.sort((a2, b2) => a2.datas[0].response - b2.datas[0].response);
       setClients(filteredAsc);
     }
     setFunc(!param);
@@ -52,11 +83,19 @@ function Patients() {
     setFunc(!param);
   };
 
+  const changeTrue = (setHook) => {
+    setHook(true);
+  };
+
+  const changeFalse = (setHook) => {
+    setHook(false);
+  };
+
   const renderRedirect = () => {
     if (redirect) {
       return (
         <div>
-          <Redirect to={`/client/:${id}`} />
+          <Redirect to={`/client/${id}`} />
         </div>
       );
     }
@@ -64,15 +103,46 @@ function Patients() {
   };
 
   if (!clients.length) {
-    return <div className='loadingDiv'> Loading ...</div>
+    return <div className="loadingDiv"> Loading ...</div>;
   }
 
   return (
     <div className="container-fluid">
       <div className="tableStyle">
         {renderRedirect()}
-        {mailArray.length ? <button type="button" className="btn btn-primary btn-lg btn-block">envoyer email</button> : <button type="button" className="btn btn-light btn-lg btn-block" disabled>envoyer email</button>}
-        < table className="table table-hover table-bordered">
+        {mailArray.length
+          ? (
+            <button
+              type="button"
+              onClick={
+                a ? (e) => {
+                  subMit(e);
+                  changeFalse(setA);
+                } : () => {
+                  changeTrue(setA);
+                }}
+              className="btn btn-primary btn-lg btn-block"
+            >
+              envoyer email
+            </button>
+          ) : <button type="button" className="btn btn-light btn-lg btn-block" disabled>envoyer email</button>}
+        {(a && mailArray.length)
+          ? (
+            <div className="mt-3">
+              <strong>Vers quelle adresse ?</strong>
+              <input
+                style={{ border: 'none' }}
+                className="label-content ml-1 w-100 mb-3"
+                type="text"
+                id="mail"
+                name="mail"
+                onChange={event => setMail(event.target.value)}
+                value={mail}
+                placeholder={"saisissez l'adresse"}
+              />
+            </div>
+          ) : <div />}
+        <table className="table table-hover table-bordered">
           <thead>
             <tr>
               <th scope="col"><button type="button" onClick={() => filterClients('name', [setFilterName, filterName])}>Nom</button></th>
@@ -87,26 +157,35 @@ function Patients() {
             {clients.map((client, index) => (
               <tr key={[index]}>
                 <td>
-                  <button type="button" onClick={() => {
-                    setRedirect(true)
-                    setId(client.id)
-                  }}>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setRedirect(true);
+                      setId(client.id);
+                    }}
+                  >
                     {client.lastName}
                   </button>
                 </td>
                 <td>{client.name}</td>
                 <td>Statut</td>
-                <td>{client.datas[0].response}</td>
+                <td>{!client.datas.length ? 'undefined' : client.datas[0].response}</td>
                 <td>{client.city}</td>
                 <td>
-                  <input type="checkbox" onChange={() => nameArray(client.relativePerson.mail)} name="email" />
+                  <input
+                    type="checkbox"
+                    onChange={() => {
+                      nameArray(client.relativePerson.mail);
+                    }}
+                    name="email"
+                  />
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-    </div >
+    </div>
   );
 }
 
