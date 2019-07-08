@@ -163,7 +163,7 @@ const Patient = ({ match }) => {
     if (redirect) {
       return (
         <div>
-          <Redirect to={`/client/:${id}`} />
+          <Redirect to={`/client/${id}`} />
           {window.location.reload(true)}
         </div>
       );
