@@ -16,24 +16,22 @@ const Proche = (props) => {
     }
   }, [eventsProps.data]);
 
-  console.log(questions);
-  
-
-  const modifyForm = (ev, index) => {
+  const modifyForm = (ev) => {
     ev.preventDefault();
     const dataModif = new FormData();
-    dataModif.append('name', "flocea");
-    dataModif.append('lastName', "ninja");
+    dataModif.append('name', 'flocea');
+    dataModif.append('lastName', 'ninja');
     dataModif.append('phone', '0680868685');
-    dataModif.append('relationship', "fils");
-    dataModif.append('mail', "x@z.fr");
+    dataModif.append('relationship', 'fils');
+    dataModif.append('mail', 'x@z.fr');
     dataModif.append('caregiver', 0);
 
-    for (let [key, value] of dataModif.entries()) {
-      console.log(`${key}: ${value}`);
-    }
-    axios.post(`http://192.168.184.172:8001/relative-persons/`, dataModif)
+    // for (let [key, value] of dataModif.entries()) {
+    //   console.log(`${key}: ${value}`);
+    // }
+    axios.post('http://192.168.184.172:8001/relative-persons/', dataModif)
       .then((response) => {
+        // eslint-disable-next-line no-console
         console.log(response);
       })
       .catch((error) => {
@@ -42,13 +40,10 @@ const Proche = (props) => {
       });
   };
 
-
-
   const testSituation = (x) => {
     const forIndex = x.type.slice(-2, -1);
-    const lessindex=x.type.slice(-4,-3);
-    console.log(lessindex);
-    
+    // const lessindex = x.type.slice(-4, -3);
+
     const labels = JSON.parse(x.label);
     const array = [];
     for (let i = 0; i <= forIndex; i += 1) {
@@ -59,6 +54,7 @@ const Proche = (props) => {
               className="form-check-input"
               type="checkbox"
               onChange={(e) => {
+                // eslint-disable-next-line no-console
                 console.log(e.target.value);
               }}
               id="inlineCheckbox1"
@@ -78,22 +74,25 @@ const Proche = (props) => {
   }
 
   return (
-    <div className='container-fluid cardDisplay' >
+    <div className="container-fluid cardDisplay">
 
       {
         questions.map((x, i) => {
-
           if (x.type === 'string') {
-            return (<div key={[i]}>
-              {x.content}
-              <input placeholder="string" />
-            </div>)
+            return (
+              <div key={[i]}>
+                {x.content}
+                <input placeholder="string" />
+              </div>
+            );
           }
           if (x.type === 'bool') {
-            return (<div key={[i]}>
-              {x.content}
-              <input type="checkbox" />
-            </div>)
+            return (
+              <div key={[i]}>
+                {x.content}
+                <input type="checkbox" />
+              </div>
+            );
           }
           if (x.type === 'int') {
             return (
@@ -111,25 +110,20 @@ const Proche = (props) => {
                     {x.content}
                     :
                   </span>}
-                {testSituation(x, i).map((item, index) => {
-                  return (<span key={[index]}>{item}</span>)
-                })
-                }
-
+                {testSituation(x, i).map((item, index) => (<span key={[index]}>{item}</span>))}
               </div>
-            )
+            );
           }
 
           return null;
-
         })
       }
       <div>
-        <button type="button" onClick={(e) => { modifyForm(e) }}>send</button>
+        <button type="button" onClick={e => modifyForm(e)}>send</button>
       </div>
     </div>
 
-  )
-}
+  );
+};
 
 export default Proche;

@@ -39,23 +39,15 @@ function Questions() {
   };
 
   const modifyForm = (e, index) => {
-    console.log('coucou');
-
     e.preventDefault();
     const data = new FormData();
     data.append('content', dataModif.modQuestName);
     data.append('category', dataModif.modQuestCat);
     data.append('type', dataModif.modQuestType);
     data.append('label', JSON.stringify(dataModif.modQuestLabel));
-    for (let [key, value] of data.entries()) {
-      console.log(`${key}: ${value}`);
-    }
-
 
     axios.post(`http://192.168.184.172:8001/questions/update/${questId}`, data)
       .then((response) => {
-        console.log(response);
-
         if (response.status === 200) {
           const questTemp = [...questions];
           questTemp[index].content = questName;
@@ -102,16 +94,12 @@ function Questions() {
   }, []);
 
   const submit = (e) => {
-
     e.preventDefault();
     const data = new FormData();
     data.append('name', dataSend.dataName);
     data.append('category', dataSend.dataCategory);
     data.append('type', dataSend.dataType);
     data.append('label', JSON.stringify(dataSend.dataLabel));
-    for (let [key, value] of data.entries()) {
-      console.log(`${key}: ${value}`);
-    }
     axios.post('http://192.168.184.172:8001/questions/', data)
       .then((response) => {
         if (response.status === 201) {
@@ -146,7 +134,6 @@ function Questions() {
   };
 
   if (questions) {
-
     return (
       <div className="container" id="questions-style">
         <h1>Questions</h1>
@@ -155,7 +142,7 @@ function Questions() {
             <div className="form-group">
               <label htmlFor="formName" className="inputWidth">
                 Nom de la question
-              <input type="text" className="form-control" id="formName" onChange={e => setName(e.target.value)} placeholder="Nom de la question" />
+                <input type="text" className="form-control" id="formName" onChange={e => setName(e.target.value)} placeholder="Nom de la question" />
               </label>
             </div>
           </div>
@@ -163,7 +150,7 @@ function Questions() {
             <div className="form-row align-items-center col-md-6">
               <label htmlFor="catSelect">
                 Catégorie
-              <select id="catSelect" className="form-control" onChange={e => setCategory(e.target.value)}>
+                <select id="catSelect" className="form-control" onChange={e => setCategory(e.target.value)}>
                   <option defaultValue>Choix catégorie</option>
                   {categories.map((mapCategory, index) => (
                     <option key={[index]}>
@@ -176,7 +163,7 @@ function Questions() {
             <div className="form-row align-items-center col-md-6">
               <label htmlFor="typeQuest">
                 Type de question
-              <select id="typeQuest" className="form-control" onChange={e => setType(e.target.value)}>
+                <select id="typeQuest" className="form-control" onChange={e => setType(e.target.value)}>
                   {/* {questions.map((question, index) => (
               <option key={[index]}>
                 {question.type}
@@ -195,20 +182,20 @@ function Questions() {
             <div className="form-row align-items-center col-md-6">
               <label htmlFor="echelleMin">
                 Echelle min
-              <input type="number" className="form-control" id="echelleMin" onChange={e => setMin(e.target.value)} />
+                <input type="number" className="form-control" id="echelleMin" onChange={e => setMin(e.target.value)} />
               </label>
             </div>
             <div className="form-row align-items-center col-md-6">
               <label htmlFor="echelleMax">
                 Echelle max
-              <input type="number" className="form-control" id="echelleMax" onChange={e => setMax(e.target.value)} />
+                <input type="number" className="form-control" id="echelleMax" onChange={e => setMax(e.target.value)} />
               </label>
             </div>
           </div>
           <div className="row maxStyle">
             <label htmlFor="labelQuest">
               Valeurs des échelles
-            <input type="text" className="form-control" id="labelQuest" onChange={e => setLabel(e.target.value)} />
+              <input type="text" className="form-control" id="labelQuest" onChange={e => setLabel(e.target.value)} />
             </label>
           </div>
           <button type="submit" onClick={submit} className="btn btn-success questionBut">Ajouter une question</button>

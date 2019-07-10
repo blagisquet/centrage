@@ -19,7 +19,6 @@ function Questions() {
   const [questId, setQuestId] = useState('');
   const [label, setLabel] = useState('');
   const [questLabel, setQuestLabel] = useState('');
-  
   const handleChange = (index) => {
     const temp = [...modif];
     temp[index] = !temp[index];
@@ -30,9 +29,6 @@ function Questions() {
     setQuestId(questions[index].id);
     setQuestLabel(questions[index].label);
   };
-
-  
-
   const deleteQuestion = (e, index, indexBdd) => {
     e.preventDefault();
     const data = new FormData();
@@ -44,7 +40,6 @@ function Questions() {
         setQuestions(delQTemp);
       });
   };
-
   useEffect(() => {
     axios.get('http://192.168.184.172:8001/questions')
       .then((result) => {
@@ -57,15 +52,12 @@ function Questions() {
         setModif(temp);
       });
   }, []);
-
-
   const dataModif = {
     modQuestName: questName,
     modQuestCat: questCat,
     modQuestType: questType,
     modQuestLabel: questLabel,
   };
-
   const modifyForm = (e, index) => {
     e.preventDefault();
     const data = new FormData();
@@ -73,9 +65,9 @@ function Questions() {
     data.append('category', dataModif.modQuestCat);
     data.append('type', dataModif.modQuestType);
     data.append('label', JSON.stringify(dataModif.modQuestLabel.split(',')));
-        for (let [key, value] of data.entries()) {
-      console.log(`${key}: ${value}`);
-    }
+    //     for (let [key, value] of data.entries()) {
+    //   console.log(`${key}: ${value}`);
+    // }
     axios.post(`http://192.168.184.172:8001/questions/update/${questId}`, data)
       .then((response) => {
         if (response.status === 200) {
@@ -90,14 +82,12 @@ function Questions() {
         handleChange(index);
       });
   };
-
   const dataSend = {
     dataName: name,
     dataCategory: category,
     dataType: `${type}(${min},${max})`,
     dataLabel: label,
   };
-
   const submit = (e) => {
     e.preventDefault();
     const data = new FormData();
@@ -105,9 +95,9 @@ function Questions() {
     data.append('category', dataSend.dataCategory);
     data.append('type', dataSend.dataType);
     data.append('label', JSON.stringify(dataSend.dataLabel.split(',')));
-    for (let [key, value] of data.entries()) {
-      console.log(`${key}: ${value}`);
-    }
+    // for (let [key, value] of data.entries()) {
+    //   console.log(`${key}: ${value}`);
+    // }
     axios.post('http://192.168.184.172:8001/questions/', data)
       .then((response) => {
         if (response.status === 201) {
@@ -124,14 +114,12 @@ function Questions() {
         }
       });
   };
-
   useEffect(() => {
     axios.get('http://192.168.184.172:8001/categories')
       .then((result) => {
         setCategories(result.data);
       });
   }, []);
-
   const filterQuestions = (tag, [setFunc, param]) => {
     if (param) {
       setQuestions(_.sortBy(questions, tag).reverse());
@@ -140,7 +128,6 @@ function Questions() {
     }
     setFunc(!param);
   };
-
   return (
     <div className="container" id="questions-style">
       <h1>Questions</h1>
@@ -168,7 +155,7 @@ function Questions() {
             </label>
           </div>
           <div className="form-row align-items-center col-md-6">
-            <label htmlFor="typeQuest">
+            <label id="typeQuest" htmlFor="typeQuest">
               Type de question
               <select id="typeQuest" className="form-control" onChange={e => setType(e.target.value)}>
                 {/* {questions.map((question, index) => (
@@ -300,5 +287,4 @@ function Questions() {
     </div>
   );
 }
-
 export default Questions;
