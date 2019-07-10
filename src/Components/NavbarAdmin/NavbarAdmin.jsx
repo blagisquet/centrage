@@ -7,6 +7,7 @@ import Questions from '../Questions/Questions';
 import Patients from '../Patients/Patients';
 import Patient from '../Patient/Patient';
 import RDV from '../RDV/RDV';
+import Formulaire from '../Formulaire/Formulaire';
 import './NavbarAdmin.css';
 
 
@@ -35,7 +36,10 @@ function NavbarAdmin() {
               <Link to="/rdv" className="nav-link">RDV</Link>
             </li>
             <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
-              <Link to="/login" className="nav-link login">Login</Link>
+              <Link to="/formulaire" className="nav-link ">Formulaire</Link>
+            </li>
+            <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+              <Link to="/login" className="nav-link ">Login</Link>
             </li>
           </ul>
         </div>
@@ -47,6 +51,7 @@ function NavbarAdmin() {
       <Route path="/clients" exact component={Patients} />
       <Route path="/client/:id" exact component={Patient} />
       <Route path="/RDV" exact component={RDV} />
+      <Route path="/formulaire" exact component={Formulaire} />
     </Router>
   );
 }
