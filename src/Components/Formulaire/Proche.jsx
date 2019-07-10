@@ -2,17 +2,22 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const Proche = (props) => {
-
   const [questions, setQuestions] = useState();
-  const situationFam = ['seul', 'veuf', 'divorce']
-  const response = ['often', 'not often', 'rarely', 'only', 'never', 'coucou'];
-  const [responseLabel, setResponseLabel] = useState([]);
+  const [eventsProps, setEventsProps] = useState({});
+
+
+  useEffect(() => {
+    setEventsProps(props);
+  }, [props]);
+
+  useEffect(() => {
+    if (eventsProps.data) {
+      setQuestions(eventsProps.data.questions);
+    }
+  }, [eventsProps.data]);
 
   console.log(questions);
-  useEffect(() => {
-    if (props.data)
-      setQuestions(props.data.questions);
-  }, [props.data]);
+  
 
   const modifyForm = (ev, index) => {
     ev.preventDefault();
@@ -23,7 +28,6 @@ const Proche = (props) => {
     dataModif.append('relationship', "fils");
     dataModif.append('mail', "x@z.fr");
     dataModif.append('caregiver', 0);
-
 
     for (let [key, value] of dataModif.entries()) {
       console.log(`${key}: ${value}`);
@@ -40,37 +44,38 @@ const Proche = (props) => {
 
 
 
-  const testSituation = (x, i) => {
-    console.log(i);
-    console.log(x);
-    
-
+  const testSituation = (x) => {
     const forIndex = x.type.slice(-2, -1);
-    const labels =JSON.parse(x.label);
-   
+    const lessindex=x.type.slice(-4,-3);
+    console.log(lessindex);
     
-    let array = [];
+    const labels = JSON.parse(x.label);
+    const array = [];
     for (let i = 0; i <= forIndex; i += 1) {
       array.push(
         <div className="form-check form-check-inline">
           <label className="form-check-label" htmlFor="inlineCheckbox1">
-            <input className="form-check-input" type="checkbox" onChange={(e) => {
-              console.log(e.target.value);
-
-            }} id="inlineCheckbox1" value={situationFam[i]} />
+            <input
+              className="form-check-input"
+              type="checkbox"
+              onChange={(e) => {
+                console.log(e.target.value);
+              }}
+              id="inlineCheckbox1"
+              value={labels[i]}
+            />
             <span className="mr-2">{labels[i]}</span>
           </label>
-        </div>
-      )
+        </div>,
+      );
     }
     return array;
-  }
+  };
 
 
   if (!questions) {
     return (<div>loading</div>);
   }
-
 
   return (
     <div className='container-fluid cardDisplay' >
@@ -98,7 +103,7 @@ const Proche = (props) => {
               </div>
             );
           }
-          if (x.type.includes('Echel') && ((x.type.slice(-2, -1)) === "2")) {
+          if (x.type.includes('Echel')) {
             return (
               <div key={[i]}>
                 {
@@ -114,18 +119,7 @@ const Proche = (props) => {
               </div>
             )
           }
-          if (x.type.includes('echel') && ((x.type.slice(-2, -1)) === "5")) {
-            return (
-              <div key={[i]}>
-                {
-                  <span className="mr-2">
-                    {x.content}
-                    :
-                  </span>}
-                {testSituation(x, i).map((item, index) => (<span key={[index]}>{item}</span>))}
-              </div>
-            );
-          }
+
           return null;
 
         })

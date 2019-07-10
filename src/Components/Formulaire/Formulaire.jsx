@@ -15,7 +15,7 @@ const Formulaire = () => {
 
   return (
     <div>
-      <Proche data={patient} />
+      <Proche data={proche} />
     </div>
   );
 };
