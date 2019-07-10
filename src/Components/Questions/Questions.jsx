@@ -17,7 +17,9 @@ function Questions() {
   const [max, setMax] = useState();
   const [modif, setModif] = useState([]);
   const [questId, setQuestId] = useState('');
-
+  const [label, setLabel] = useState('');
+  const [questLabel, setQuestLabel] = useState('');
+  
   const handleChange = (index) => {
     const temp = [...modif];
     temp[index] = !temp[index];
@@ -26,12 +28,14 @@ function Questions() {
     setQuestCat(questions[index].category.name);
     setQuestType(questions[index].type);
     setQuestId(questions[index].id);
+    setQuestLabel(questions[index].label);
   };
 
   const dataModif = {
     modQuestName: questName,
     modQuestCat: questCat,
     modQuestType: questType,
+    modQuestLabel: questLabel,
   };
 
   const modifyForm = (e, index) => {
@@ -40,6 +44,10 @@ function Questions() {
     data.append('content', dataModif.modQuestName);
     data.append('category', dataModif.modQuestCat);
     data.append('type', dataModif.modQuestType);
+    data.append('label', JSON.stringify(dataModif.modQuestLabel));
+        for (let [key, value] of data.entries()) {
+      console.log(`${key}: ${value}`);
+    }
     axios.post(`http://192.168.184.172:8001/questions/update/${questId}`, data)
       .then((response) => {
         if (response.status === 200) {
@@ -47,6 +55,8 @@ function Questions() {
           questTemp[index].content = questName;
           setQuestions(questTemp);
           questTemp[index].category.name = questCat;
+          setQuestions(questTemp);
+          questTemp[index].label = questLabel;
           setQuestions(questTemp);
         }
         handleChange(index);
@@ -57,13 +67,14 @@ function Questions() {
     dataName: name,
     dataCategory: category,
     dataType: `${type}(${min},${max})`,
+    dataLabel: label,
   };
 
-  const deleteQuestion = (e, index) => {
+  const deleteQuestion = (e, index, indexBdd) => {
     e.preventDefault();
     const data = new FormData();
-    data.append('index', index);
-    axios.delete(`http://192.168.184.172:8001/questions/${index}`, data)
+    data.append('index', indexBdd);
+    axios.delete(`http://192.168.184.172:8001/questions/${indexBdd}`, data)
       .then(() => {
         const delQTemp = [...questions];
         delQTemp.splice(index, 1);
@@ -90,6 +101,7 @@ function Questions() {
     data.append('name', dataSend.dataName);
     data.append('category', dataSend.dataCategory);
     data.append('type', dataSend.dataType);
+    data.append('label', JSON.stringify(dataSend.dataLabel.split(',')));
     axios.post('http://192.168.184.172:8001/questions/', data)
       .then((response) => {
         if (response.status === 201) {
@@ -97,6 +109,7 @@ function Questions() {
             id: response.data.id,
             content: name,
             datType: type,
+            datLabel: label,
             category: {
               name: category,
             },
@@ -180,6 +193,12 @@ function Questions() {
             </label>
           </div>
         </div>
+        <div className="row maxStyle">
+          <label htmlFor="labelQuest">
+            Valeurs des échelles
+            <input type="text" className="form-control" id="labelQuest" onChange={e => setLabel(e.target.value)} />
+          </label>
+        </div>
         <button type="submit" onClick={submit} className="btn btn-success questionBut">Ajouter une question</button>
       </form>
       <table className="question-table-style table table-hover table-bordered">
@@ -188,6 +207,7 @@ function Questions() {
             <th className="col-4" scope="col">Questions</th>
             <th onClick={() => filterQuestions('name', [setFilterCategory, filterCategory])} className="col-3" scope="col">Catégorie</th>
             <th className="col-3" scope="col">Type de questions</th>
+            <th className="col-3" scope="col">Valeurs échelle</th>
             <th className="col-1" scope="col">Editer</th>
             <th className="col-1" scope="col">Supprimer</th>
           </tr>
@@ -241,10 +261,31 @@ function Questions() {
               </td>
               <td>{question.type}</td>
               <td>
+                {
+                  modif[index]
+                    ? (
+                      <input
+                        type="text"
+                        id="questLabel"
+                        name="questLabel"
+                        onChange={event => setQuestLabel(event.target.value)}
+                        value={questLabel}
+                        placeholder={JSON.parse(question.label)}
+                      />
+                    )
+                    : (
+                      <div>
+                        {JSON.parse(question.label)}
+                        {modif[index]}
+                      </div>
+                    )
+                }
+              </td>
+              <td>
                 <button type="button" onClick={modif[index] ? event => modifyForm(event, index) : () => handleChange(index)} className="btn btn-primary btn-sm float-right">{modif[index] ? 'Valider' : 'Editer'}</button>
               </td>
               <td>
-                <button type="button" onClick={e => deleteQuestion(e, index)} className="btn btn-primary btn-sm float-right">Supprimer</button>
+                <button type="button" onClick={e => deleteQuestion(e, index, question.id)} className="btn btn-primary btn-sm float-right">Supprimer</button>
               </td>
             </tr>
           ))}
