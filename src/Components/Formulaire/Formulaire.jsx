@@ -3,7 +3,6 @@ import Proche from './Proche';
 import Data from '../Data/Data';
 
 const Formulaire = () => {
-
   const [proche, setProche] = useState();
   const [patient, setPatient] = useState();
 
@@ -11,15 +10,14 @@ const Formulaire = () => {
     Data((result) => {
       setProche(result[0]);
       setPatient(result[1]);
-    })
+    });
   }, []);
 
   return (
-
     <div>
-      <Proche data={proche} />
+      <Proche data={patient} />
     </div>
-  )
+  );
 };
 
 export default Formulaire;

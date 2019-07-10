@@ -42,8 +42,13 @@ const Proche = (props) => {
 
   const testSituation = (x, i) => {
     console.log(i);
+    console.log(x);
+    
 
     const forIndex = x.type.slice(-2, -1);
+    const labels =JSON.parse(x.label);
+   
+    
     let array = [];
     for (let i = 0; i <= forIndex; i += 1) {
       array.push(
@@ -53,25 +58,7 @@ const Proche = (props) => {
               console.log(e.target.value);
 
             }} id="inlineCheckbox1" value={situationFam[i]} />
-            <span className="mr-2">{situationFam[i]}</span>
-          </label>
-        </div>
-      )
-    }
-    return array;
-  }
-
-  const testResp = (x, i) => {
-    console.log(i);
-
-    const forIndex = x.type.slice(-2, -1);
-    let array = [];
-    for (let i = 0; i <= forIndex; i += 1) {
-      array.push(
-        <div className="form-check form-check-inline">
-          <label className="form-check-label" htmlFor="inlineCheckbox1">
-            <input className="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" />
-            <span className="mr-2">{response[i]}</span>
+            <span className="mr-2">{labels[i]}</span>
           </label>
         </div>
       )
@@ -111,7 +98,7 @@ const Proche = (props) => {
               </div>
             );
           }
-          if (x.type.includes('chel') && ((x.type.slice(-2, -1)) === "2")) {
+          if (x.type.includes('Echel') && ((x.type.slice(-2, -1)) === "2")) {
             return (
               <div key={[i]}>
                 {
@@ -127,19 +114,17 @@ const Proche = (props) => {
               </div>
             )
           }
-          if (x.type.includes('chel') && ((x.type.slice(-2, -1)) === "5")) {
+          if (x.type.includes('echel') && ((x.type.slice(-2, -1)) === "5")) {
             return (
               <div key={[i]}>
                 {
-                  <span className="mr-2">{x.content}:</span>}
-                {testResp(x, i).map((item, index) => {
-                  return (<span key={[index]}>{item}</span>)
-                })
-                }
-
+                  <span className="mr-2">
+                    {x.content}
+                    :
+                  </span>}
+                {testSituation(x, i).map((item, index) => (<span key={[index]}>{item}</span>))}
               </div>
-
-            )
+            );
           }
           return null;
 
