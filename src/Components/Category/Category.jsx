@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Category.css';
 import axios from 'axios';
 import _ from 'underscore';
+import url from '../Data/config';
 
 function Category() {
   const [categories, setCategories] = useState([]);
@@ -31,7 +32,7 @@ function Category() {
     e.preventDefault();
     const data = new FormData();
     data.append('name', dataModif.dataCat);
-    axios.post(`http://192.168.184.172:8001/categories/update/${catId}`, data)
+    axios.post(`${url}/categories/update/${catId}`, data)
       .then((response) => {
         if (response.status === 200) {
           const catTemp = [...categories];
@@ -43,7 +44,7 @@ function Category() {
   };
 
   useEffect(() => {
-    axios.get('http://192.168.184.172:8001/categories')
+    axios.get(`${url}/categories`)
       .then((result) => {
         setCategories(result.data);
         setCatId(result.data.id);
@@ -59,7 +60,7 @@ function Category() {
     e.preventDefault();
     const data = new FormData();
     data.append('name', catSend.dataCategory);
-    axios.post('http://192.168.184.172:8001/categories/', data)
+    axios.post(`${url}/categories/`, data)
       .then((response) => {
         if (response.status === 201) {
           setCategories([...categories, {
@@ -75,7 +76,7 @@ function Category() {
     e.preventDefault();
     const data = new FormData();
     data.append('index', index);
-    axios.delete(`http://192.168.184.172:8001/categories/${index}`, data)
+    axios.delete(`${url}/categories/${index}`, data)
       .then(() => {
         const delTemp = [...categories];
         delTemp.splice(index, 1);

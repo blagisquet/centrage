@@ -5,6 +5,7 @@ import axios from 'axios';
 import Relative from './Relative';
 import './Patient.css';
 import Trusted from './Trusted';
+import url from '../Data/config';
 
 const Patient = ({ match }) => {
   const [name, setName] = useState();
@@ -57,7 +58,7 @@ const Patient = ({ match }) => {
   };
 
   useEffect(() => {
-    axios.get(`http://192.168.184.172:8001/patients/${clientId}`)
+    axios.get(`${url}/patients/${clientId}`)
       .then((result) => {
         setName(result.data);
 
@@ -74,7 +75,7 @@ const Patient = ({ match }) => {
   }, [clientId]);
 
   useEffect(() => {
-    axios.get(`http://192.168.184.172:8001/patients/${clientId}/datas`)
+    axios.get(`${url}/patients/${clientId}/datas`)
       .then((result) => {
         setData(result.data);
         let temp = [];
@@ -108,7 +109,7 @@ const Patient = ({ match }) => {
     // for (let [key, value] of data.entries()) {
     //   console.log(`${key}: ${value}`);
     // }
-    axios.post(`http://192.168.184.172:8001/datas/update/${questId[index]}`, dataModif)
+    axios.post(`${url}/datas/update/${questId[index]}`, dataModif)
       .then((response) => {
         if (response.status === 202) {
           const respTemp = [...responses];
@@ -139,7 +140,7 @@ const Patient = ({ match }) => {
     //   console.log(`${key}: ${value}`);
     // }
 
-    axios.post(`http://192.168.184.172:8001/patients/update/${clientId}`, dataCl)
+    axios.post(`${url}/patients/update/${clientId}`, dataCl)
       .then((response) => {
         // eslint-disable-next-line no-console
         console.log(response);

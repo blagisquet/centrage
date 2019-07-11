@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './RDV.css';
 import axios from 'axios';
 import _ from 'underscore';
+import url from '../Data/config';
 
 function RDV() {
   const [rdv, setRdv] = useState([]);
@@ -9,7 +10,7 @@ function RDV() {
   const [filterHours, setFilterHours] = useState([false]);
 
   useEffect(() => {
-    axios.get('http://192.168.184.172:8001/patients/rdv')
+    axios.get(`${url}/patients/rdv`)
       .then((result) => {
         setRdv(result.data);
       });

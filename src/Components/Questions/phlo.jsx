@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import _ from 'underscore';
+import url from '../Data/config';
 import './Questions.css';
 
 function Questions() {
@@ -33,7 +34,7 @@ function Questions() {
     e.preventDefault();
     const data = new FormData();
     data.append('index', indexBdd);
-    axios.delete(`http://192.168.184.172:8001/questions/${indexBdd}`, data)
+    axios.delete(`${url}/questions/${indexBdd}`, data)
       .then(() => {
         const delQTemp = [...questions];
         delQTemp.splice(index, 1);
@@ -41,7 +42,7 @@ function Questions() {
       });
   };
   useEffect(() => {
-    axios.get('http://192.168.184.172:8001/questions')
+    axios.get(`${url}/questions`)
       .then((result) => {
         setQuestions(result.data);
         setQuestId(result.data.id);
@@ -65,10 +66,8 @@ function Questions() {
     data.append('category', dataModif.modQuestCat);
     data.append('type', dataModif.modQuestType);
     data.append('label', JSON.stringify(dataModif.modQuestLabel.split(',')));
-    //     for (let [key, value] of data.entries()) {
-    //   console.log(`${key}: ${value}`);
-    // }
-    axios.post(`http://192.168.184.172:8001/questions/update/${questId}`, data)
+
+    axios.post(`${url}1/questions/update/${questId}`, data)
       .then((response) => {
         if (response.status === 200) {
           const questTemp = [...questions];
@@ -95,10 +94,8 @@ function Questions() {
     data.append('category', dataSend.dataCategory);
     data.append('type', dataSend.dataType);
     data.append('label', JSON.stringify(dataSend.dataLabel.split(',')));
-    // for (let [key, value] of data.entries()) {
-    //   console.log(`${key}: ${value}`);
-    // }
-    axios.post('http://192.168.184.172:8001/questions/', data)
+
+    axios.post(`${url}/questions/`, data)
       .then((response) => {
         if (response.status === 201) {
           setQuestions([...questions, {
@@ -115,7 +112,7 @@ function Questions() {
       });
   };
   useEffect(() => {
-    axios.get('http://192.168.184.172:8001/categories')
+    axios.get(`${url}/categories`)
       .then((result) => {
         setCategories(result.data);
       });

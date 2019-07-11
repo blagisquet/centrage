@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import url from '../Data/config';
 
 const Proche = (props) => {
   const [questions, setQuestions] = useState();
   const [eventsProps, setEventsProps] = useState({});
-
 
   useEffect(() => {
     setEventsProps(props);
@@ -26,10 +26,7 @@ const Proche = (props) => {
     dataModif.append('mail', 'x@z.fr');
     dataModif.append('caregiver', 0);
 
-    // for (let [key, value] of dataModif.entries()) {
-    //   console.log(`${key}: ${value}`);
-    // }
-    axios.post('http://192.168.184.172:8001/relative-persons/', dataModif)
+    axios.post(`${url}/relative-persons/`, dataModif)
       .then((response) => {
         // eslint-disable-next-line no-console
         console.log(response);
@@ -68,10 +65,7 @@ const Proche = (props) => {
     return array;
   };
 
-
-  if (!questions) {
-    return (<div>loading</div>);
-  }
+  if (!questions) { return <div>loading</div>; }
 
   return (
     <div className="container-fluid cardDisplay">

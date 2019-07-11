@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import _ from 'underscore';
+import url from '../Data/config';
 import './Patients.css';
 
 function Patients() {
@@ -20,14 +21,11 @@ function Patients() {
   };
 
   useEffect(() => {
-    axios.get('http://192.168.184.172:8001/patients')
+    axios.get(`${url}/patients`)
       .then((result) => {
         setClients(result.data);
       });
   }, []);
-
-  // console.log(clients);
-  // console.log(mailArray);
 
   const subMit = (e) => {
     e.preventDefault();
@@ -35,11 +33,7 @@ function Patients() {
     data.append('email', dataSend.email);
     data.append('listEmail', dataSend.listEmail);
 
-    // for (let [key, value] of data.entries()) {
-    //   console.log(`${key}: ${value}`);
-    // }
-
-    axios.post('http://192.168.184.172:8001/patients/email', data)
+    axios.post(`${url}/patients/email`, data)
       .then((response) => {
         // eslint-disable-next-line no-console
         console.log(response);

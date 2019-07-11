@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import url from '../Data/config';
 
 const Trusted = (props) => {
   const [a, setA] = useState(false);
@@ -19,7 +20,7 @@ const Trusted = (props) => {
 
   useEffect(() => {
     if (eventsProps.data) {
-      axios.get(`http://192.168.184.172:8001/trusted-persons/${eventsProps.data}`)
+      axios.get(`${url}/trusted-persons/${eventsProps.data}`)
         .then((data) => {
           setTrusted(data.data);
           setlstNm(data.data.lastName);
@@ -64,7 +65,7 @@ const Trusted = (props) => {
     // for (let [key, value] of data.entries()) {
     //   console.log(`${key}: ${value}`);
     // }
-    axios.post(`http://192.168.184.172:8001/trusted-persons/update/${eventsProps.data}`, data)
+    axios.post(`${url}/trusted-persons/update/${eventsProps.data}`, data)
       .then((response) => {
         // eslint-disable-next-line no-console
         console.log(response);

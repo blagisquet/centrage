@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import url from '../Data/config';
 
 const Relative = (props) => {
   const [a, setA] = useState(false);
@@ -23,7 +24,7 @@ const Relative = (props) => {
 
   useEffect(() => {
     if (eventsProps.data) {
-      axios.get(`http://192.168.184.172:8001/relative-persons/${eventsProps.data}`)
+      axios.get(`${url}/relative-persons/${eventsProps.data}`)
         .then((data) => {
           setRelative(data.data);
           setCareGiv(data.data.caregiver);
@@ -74,7 +75,7 @@ const Relative = (props) => {
     // for (let [key, value] of data.entries()) {
     //   console.log(`${key}: ${value}`);
     // }
-    axios.post(`http://192.168.184.172:8001/relative-persons/update/${eventsProps.data}`, data)
+    axios.post(`${url}/relative-persons/update/${eventsProps.data}`, data)
       .then((response) => {
         // eslint-disable-next-line no-console
         console.log(response);

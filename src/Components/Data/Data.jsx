@@ -1,8 +1,9 @@
 import axios from 'axios';
+import url from './config';
 
 const Data = (callback) => {
-  const url = 'http://192.168.184.172:8001/form';
-  axios.get(url)
+  const urlData = `${url}/form`;
+  axios.get(urlData)
     .then((response) => {
       callback(response.data);
     });
