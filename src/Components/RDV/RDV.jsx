@@ -3,7 +3,6 @@ import './RDV.css';
 import axios from 'axios';
 import _ from 'underscore';
 
-
 function RDV() {
   const [rdv, setRdv] = useState([]);
   const [filterLastname, setFilterLastname] = useState([false]);

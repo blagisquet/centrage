@@ -3,7 +3,6 @@ import './Category.css';
 import axios from 'axios';
 import _ from 'underscore';
 
-
 function Category() {
   const [categories, setCategories] = useState([]);
   const [filterName, setFilterName] = useState([false]);

@@ -10,7 +10,6 @@ import RDV from '../RDV/RDV';
 import Formulaire from '../Formulaire/Formulaire';
 import './NavbarAdmin.css';
 
-
 function NavbarAdmin() {
   return (
     <Router>
