@@ -1,29 +1,29 @@
 
-@media screen and (max-width: 780px) {
+@media screen and (max-width: 1028px) {
 
-  .container {
-    max-width: 80%;
-  }
   #questions-style {
-    margin-top: 9vmax;
-    width: 100%;
+    margin-top: 11vmax;
+  }
+
+  form {
+    max-width: 95%;
+    margin-left: 4rem;
+  }
+
+  h1 {
+    text-align: center;
   }
 
   .inputWidth {
-    width: 200%;
+    width: 55rem !important;
     margin: auto;
-  }
-
-  .selectWidth {
-    width: 50rem;
-    margin-top: 1rem;
   }
 
   .questionBut {
     margin-top: 1rem;
-    margin-left: 65%;
     margin-bottom: 1rem;
-    width: 20%;
+    margin-left: 1.5rem;
+    width: 90%;
   }
 
   .maxStyle {
@@ -31,17 +31,25 @@
   }
 
   .question-table-style {
-    width: 80%;
-    margin-left: 1rem;
-    margin-right: 20rem;
+    /* margin-left: auto;
+    margin-right: auto; */
+    max-width: 90%;
+    margin: auto;
   }
 
+  .half {
+    width: 15rem;
+  }
 }
 
-@media screen and (min-width:781px) and (max-width: 1920px) {
+@media screen and (min-width:1029px) {
   #questions-style {
     margin-top: 9vmax;
-    width: 80%;
+    width: 100%;
+  }
+
+  form {
+    margin-left: 10rem;
   }
 
   .question-table-style {
@@ -51,7 +59,7 @@
   }
   
   .inputWidth {
-    width: 400% !important;
+    width: 100rem !important;
     margin: auto;
   }
   
@@ -69,5 +77,9 @@
   
   .maxStyle {
     margin-top: 1rem;
+  }
+
+  .half {
+    width: 45rem !important;
   }
 }

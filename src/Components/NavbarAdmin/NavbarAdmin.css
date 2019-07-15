@@ -1,25 +1,25 @@
-@media screen and (max-width: 780px) {
+@media screen and (max-width: 1028px) {
   .nav-link {
-    font-size: 4vmax;
+    /* display: inline-block; */
     margin-top: 2%;
-    height: 5%;
     text-align: center; 
+    font-size: 1.5rem;
   }
 
   .nav {
-    display: flex;
-    flex-direction: column;
+    width: 100%;
     margin-top: 5%;
   }
+
   .login {
      font-size: 4vmax;
      margin-top: 0.1rem;
    } 
 }
 
-@media screen and (min-width:781px) and (max-width: 1920px) {
+@media screen and (min-width:1029px) and (max-width: 1920px) {
   .nav-item {
-    /*margin-left:20%;*/
+
     margin-top: 2%; 
     font-size: 1.5vmax;
     /*font-size: 20px;*/

@@ -40,6 +40,7 @@ function Questions() {
   };
 
   const modifyForm = (e, index) => {
+    console.log('test');
     e.preventDefault();
     const data = new FormData();
     data.append('content', dataModif.modQuestName);
@@ -49,6 +50,7 @@ function Questions() {
 
     axios.post(`${url}/questions/update/${questId}`, data)
       .then((response) => {
+        console.log(response);
         if (response.status === 200) {
           const questTemp = [...questions];
           questTemp[index].content = questName;
@@ -133,8 +135,6 @@ function Questions() {
     }
     setFunc(!param);
   };
-
-  if (questions) {
     return (
       <div className="container" id="questions-style">
         <h1>Questions</h1>
@@ -282,7 +282,7 @@ function Questions() {
                   }
                 </td>
                 <td>
-                  <button type="button" onClick={modif[index] ? event => modifyForm(event, index) : () => handleChange(index)} className="btn btn-primary btn-sm float-right">{modif[index] ? 'Valider' : 'Editer'}</button>
+                  <button type="button" onClick={modif[index] ? event => modifyForm(event, index) : () => handleChange(index)} className="btn btn-primary btn-sm float-right">{modif[index] ? 'BORDEL2CUL' : 'Editer'}</button>
                 </td>
                 <td>
                   <button type="button" onClick={e => deleteQuestion(e, index, question.id)} className="btn btn-primary btn-sm float-right">Supprimer</button>
@@ -294,5 +294,5 @@ function Questions() {
       </div>
     );
   }
-}
+
 export default Questions;

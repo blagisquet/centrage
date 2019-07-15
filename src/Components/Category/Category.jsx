@@ -72,11 +72,12 @@ function Category() {
       });
   };
 
-  const deleteRow = (e, index) => {
+  const deleteCat = (e, index, indexBd) => {
     e.preventDefault();
     const data = new FormData();
-    data.append('index', index);
-    axios.delete(`${url}/categories/${index}`, data)
+    data.append('index', indexBd);
+    console.log(indexBd);
+    axios.delete(`${url}/categories/${indexBd}`, data)
       .then(() => {
         const delTemp = [...categories];
         delTemp.splice(index, 1);
@@ -98,13 +99,13 @@ function Category() {
       <form>
         <div className="form-row align-items-center catClass">
           <div className="col-6">
-            <label className="sr-only" htmlFor="category">
+            <label className="inputTaille" htmlFor="category">
               Catégorie
-              <input type="text" className="form-control mb-2" id="category" onChange={e => setCategory(e.target.value)} placeholder="Nom de la catégorie" />
+              <input type="text" className="form-control " id="category" onChange={e => setCategory(e.target.value)} placeholder="Nom de la catégorie" />
             </label>
           </div>
           <div className="col-3">
-            <button type="submit" onClick={submit} className="button-style btn btn-success mb-2">Ajouter une catégorie</button>
+            <button type="submit" onClick={submit} className="button-style btn btn-success">Ajouter une catégorie</button>
           </div>
         </div>
       </form>
@@ -131,7 +132,7 @@ function Category() {
                   }
                 </th>
                 <td><button type="button" onClick={modif[index] ? event => modifyForm(event, index) : () => handleChange(index)} className="btn btn-primary btn-sm float-right">{modif[index] ? 'Valider' : 'Editer'}</button></td>
-                <td><button type="button" onClick={e => deleteRow(e, category.id)} className="btn btn-primary btn-sm float-right">Supprimer</button></td>
+                <td><button type="button" onClick={e => deleteCat(e, index, category.id)} className="btn btn-primary btn-sm float-right">Supprimer</button></td>
               </tr>
             ))}
           </tbody>

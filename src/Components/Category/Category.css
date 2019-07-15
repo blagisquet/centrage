@@ -1,25 +1,45 @@
-#category-style {
-  margin-top: 9vmax;
-}
-
-.table-style {
-  width: 80% !important;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 1rem;
+@media screen and (min-width: 1029px) {
   
-}
+  #category-style {
+    margin-top: 10vmax;
+  }
 
-.catClass {
-  display: flex;
-  justify-content: center;
-  width: 85%;
-}
+  .inputTaille {
+    width: 20rem;
+  }
 
-.button-style {
-  width: 180%;
-}
+  .table-style {
+    width: 80% !important;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1rem;
+  }
 
-h1 {
-  text-align: center;
+  .catClass {
+    margin: auto;
+    width: 90%;
+  }
+
+  .button-style {
+    margin-top: 1rem;
+    width: 180%;
+  }
+
+  h1 {
+    text-align: center;
+  }
+}
+@media screen and (max-width: 1028px) {
+  
+  #category-style {
+    margin-top: 11vmax;
+  }
+
+  form {
+    max-width: 95%;
+  }
+
+  h1 {
+    text-align: center;
+  }
 }
