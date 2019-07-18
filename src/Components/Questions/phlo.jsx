@@ -53,12 +53,14 @@ function Questions() {
         setModif(temp);
       });
   }, []);
+
   const dataModif = {
     modQuestName: questName,
     modQuestCat: questCat,
     modQuestType: questType,
     modQuestLabel: questLabel,
   };
+
   const modifyForm = (e, index) => {
     e.preventDefault();
     const data = new FormData();
@@ -82,12 +84,14 @@ function Questions() {
         handleChange(index);
       });
   };
+
   const dataSend = {
     dataName: name,
     dataCategory: category,
     dataType: `${type}(${min},${max})`,
     dataLabel: label,
   };
+
   const submit = (e) => {
     e.preventDefault();
     const data = new FormData();
@@ -95,7 +99,6 @@ function Questions() {
     data.append('category', dataSend.dataCategory);
     data.append('type', dataSend.dataType);
     data.append('label', JSON.stringify(dataSend.dataLabel.split(',')));
-
     axios.post(`${url}/questions/`, data)
       .then((response) => {
         if (response.status === 201) {
@@ -114,12 +117,14 @@ function Questions() {
         }
       });
   };
+
   useEffect(() => {
     axios.get(`${url}/categories`)
       .then((result) => {
         setCategories(result.data);
       });
   }, []);
+
   const filterQuestions = (tag, [setFunc, param]) => {
     if (param) {
       setQuestions(_.sortBy(questions, tag).reverse());
@@ -128,6 +133,7 @@ function Questions() {
     }
     setFunc(!param);
   };
+  
   return (
     <div id="questions-style">
       <h1>Questions</h1>

@@ -101,7 +101,7 @@ function Category() {
           <div className="col-6">
             <label className="inputTaille" htmlFor="category">
               Catégorie
-              <input type="text" className="form-control " id="category" onChange={e => setCategory(e.target.value)} placeholder="Nom de la catégorie" />
+              <input type="text" className="form-control input-style" id="category" onChange={e => setCategory(e.target.value)} placeholder="Nom de la catégorie" />
             </label>
           </div>
           <div className="col-3">

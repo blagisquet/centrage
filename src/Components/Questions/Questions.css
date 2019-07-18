@@ -7,7 +7,7 @@
 
   form {
     max-width: 95%;
-    margin-left: 4rem;
+    margin-left: 5rem;
   }
 
   h1 {
@@ -15,14 +15,16 @@
   }
 
   .inputWidth {
-    width: 55rem !important;
+    width: 40rem !important;
     margin: auto;
   }
 
   .questionBut {
     margin-top: 1rem;
     margin-bottom: 1rem;
-    margin-left: 1.5rem;
+    /* margin-left: 1.5rem; */
+    padding: 0.5rem;
+    font-size: 1.2rem;
     width: 90%;
   }
 
@@ -73,6 +75,8 @@
     margin-left: 72%;
     margin-bottom: 1rem;
     width: 20%;
+    padding: 1.2rem;
+    font-size: 1.2rem;
   }
   
   .maxStyle {

@@ -5,7 +5,8 @@
   }
 
   .inputTaille {
-    width: 20rem;
+    width: 23rem;
+    margin-right: 5rem;
   }
 
   .table-style {
@@ -25,6 +26,11 @@
     width: 180%;
   }
 
+  form {
+    max-width: 95%;
+    margin-right: 6rem;
+  }
+
   h1 {
     text-align: center;
   }
@@ -41,5 +47,21 @@
 
   h1 {
     text-align: center;
+  }
+
+  .button-style {
+    margin-top: 1rem;
+    width: 180%;
+    padding: 0.5rem;
+    font-size: 1.3rem;
+  }
+
+  .inputTaille {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+  .input-style {
+    width: 19rem;
+    padding: 1.5rem;
   }
 }
