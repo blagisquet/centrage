@@ -52,13 +52,25 @@ function Questions() {
       .then((response) => {
         console.log(response);
         if (response.status === 200) {
-          const questTemp = [...questions];
-          questTemp[index].content = questName;
-          setQuestions(questTemp);
-          questTemp[index].category.name = questCat;
-          setQuestions(questTemp);
-          questTemp[index].label = questLabel;
-          setQuestions(questTemp);
+          axios.get(`${url}/questions`)
+            .then((result) => {
+              console.log('response');
+              setQuestions(result.data);
+              setQuestId(result.data.id);
+              let temp = [];
+              for (let i = 0; i <= result.data.length; i += 1) {
+                temp = [...temp, false];
+              }
+              setModif(temp);
+            });
+
+          // const questTemp = [...questions];
+          // questTemp[index].content = questName;
+          // setQuestions(questTemp);
+          // questTemp[index].category.name = questCat;
+          // setQuestions(questTemp);
+          // questTemp[index].label = questLabel;
+          // setQuestions(questTemp);
         }
         handleChange(index);
       });
@@ -135,164 +147,164 @@ function Questions() {
     }
     setFunc(!param);
   };
-    return (
-      <div className="container" id="questions-style">
-        <h1>Questions</h1>
-        <form>
-          <div className="row">
-            <div className="form-group">
-              <label htmlFor="formName" className="inputWidth">
-                Nom de la question
+  return (
+    <div className="container" id="questions-style">
+      <h1>Questions</h1>
+      <form>
+        <div className="row">
+          <div className="form-group">
+            <label htmlFor="formName" className="inputWidth">
+              Nom de la question
                 <input type="text" className="form-control" id="formName" onChange={e => setName(e.target.value)} placeholder="Nom de la question" />
-              </label>
-            </div>
+            </label>
           </div>
-          <div className="row">
-            <div className="form-row align-items-center col-md-6">
-              <label htmlFor="catSelect">
-                Catégorie
+        </div>
+        <div className="row">
+          <div className="form-row align-items-center col-md-6">
+            <label htmlFor="catSelect">
+              Catégorie
                 <select id="catSelect" className="form-control" onChange={e => setCategory(e.target.value)}>
-                  <option defaultValue>Choix catégorie</option>
-                  {categories.map((mapCategory, index) => (
-                    <option key={[index]}>
-                      {mapCategory.name}
-                    </option>
-                  ))}
-                </select>
-              </label>
-            </div>
-            <div className="form-row align-items-center col-md-6">
-              <label htmlFor="typeQuest">
-                Type de question
+                <option defaultValue>Choix catégorie</option>
+                {categories.map((mapCategory, index) => (
+                  <option key={[index]}>
+                    {mapCategory.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+          <div className="form-row align-items-center col-md-6">
+            <label htmlFor="typeQuest">
+              Type de question
                 <select id="typeQuest" className="form-control" onChange={e => setType(e.target.value)}>
-                  {/* {questions.map((question, index) => (
+                {/* {questions.map((question, index) => (
               <option key={[index]}>
                 {question.type}
               </option>
             ))} */}
-                  <option defaultValue>Choix du type de question</option>
-                  <option>Oui/Non</option>
-                  <option>Echelle</option>
-                  <option>Texte</option>
-                  <option>Nombre</option>
-                </select>
-              </label>
-            </div>
-          </div>
-          <div className="row maxStyle">
-            <div className="form-row align-items-center col-md-6">
-              <label htmlFor="echelleMin">
-                Echelle min
-                <input type="number" className="form-control" id="echelleMin" onChange={e => setMin(e.target.value)} />
-              </label>
-            </div>
-            <div className="form-row align-items-center col-md-6">
-              <label htmlFor="echelleMax">
-                Echelle max
-                <input type="number" className="form-control" id="echelleMax" onChange={e => setMax(e.target.value)} />
-              </label>
-            </div>
-          </div>
-          <div className="row maxStyle">
-            <label htmlFor="labelQuest">
-              Valeurs des échelles
-              <input type="text" className="form-control" id="labelQuest" onChange={e => setLabel(e.target.value)} />
+                <option defaultValue>Choix du type de question</option>
+                <option>Oui/Non</option>
+                <option>Echelle</option>
+                <option>Texte</option>
+                <option>Nombre</option>
+              </select>
             </label>
           </div>
-          <button type="submit" onClick={submit} className="btn btn-success questionBut">Ajouter une question</button>
-        </form>
-        <table className="question-table-style table table-hover table-bordered">
-          <thead>
-            <tr>
-              <th className="col-4" scope="col">Questions</th>
-              <th onClick={() => filterQuestions('name', [setFilterCategory, filterCategory])} className="col-3" scope="col">Catégorie</th>
-              <th className="col-3" scope="col">Type de questions</th>
-              <th className="col-3" scope="col">Valeurs échelle</th>
-              <th className="col-1" scope="col">Editer</th>
-              <th className="col-1" scope="col">Supprimer</th>
-            </tr>
-          </thead>
-          <tbody>
-            {questions.map((question, index) => (
-              <tr key={[index]}>
-                <th scope="row">
-                  {
-                    modif[index]
-                      ? (
-                        <input
-                          type="text"
-                          id="questName"
-                          name="questName"
-                          onChange={event => (setQuestName(event.target.value))}
-                          value={questName}
-                          placeholder={question.content}
-                        />
-                      )
-                      : (
-                        <div>
-                          {question.content}
-                          {modif[index]}
-                        </div>
-                      )
-                  }
-                </th>
-                <td>
-                  {modif[index]
+        </div>
+        <div className="row maxStyle">
+          <div className="form-row align-items-center col-md-6">
+            <label htmlFor="echelleMin">
+              Echelle min
+                <input type="number" className="form-control" id="echelleMin" onChange={e => setMin(e.target.value)} />
+            </label>
+          </div>
+          <div className="form-row align-items-center col-md-6">
+            <label htmlFor="echelleMax">
+              Echelle max
+                <input type="number" className="form-control" id="echelleMax" onChange={e => setMax(e.target.value)} />
+            </label>
+          </div>
+        </div>
+        <div className="row maxStyle">
+          <label htmlFor="labelQuest">
+            Valeurs des échelles
+              <input type="text" className="form-control" id="labelQuest" onChange={e => setLabel(e.target.value)} />
+          </label>
+        </div>
+        <button type="submit" onClick={submit} className="btn btn-success questionBut">Ajouter une question</button>
+      </form>
+      <table className="question-table-style table table-hover table-bordered">
+        <thead>
+          <tr>
+            <th className="col-4" scope="col">Questions</th>
+            <th onClick={() => filterQuestions('name', [setFilterCategory, filterCategory])} className="col-3" scope="col">Catégorie</th>
+            <th className="col-3" scope="col">Type de questions</th>
+            <th className="col-3" scope="col">Valeurs échelle</th>
+            <th className="col-1" scope="col">Editer</th>
+            <th className="col-1" scope="col">Supprimer</th>
+          </tr>
+        </thead>
+        <tbody>
+          {questions.map((question, index) => (
+            <tr key={[index]}>
+              <th scope="row">
+                {
+                  modif[index]
                     ? (
-                      <select
-                        id="inputState"
-                        className="form-control"
-                        onChange={e => setQuestCat(e.target.value)}
-                      >
-                        <option defaultValue>Choix catégorie</option>
-                        {categories.map((mapCategory, catIndex) => (
-                          <option key={[catIndex]}>
-                            {mapCategory.name}
-                          </option>
-                        ))}
-                      </select>
+                      <input
+                        type="text"
+                        id="questName"
+                        name="questName"
+                        onChange={event => (setQuestName(event.target.value))}
+                        value={questName}
+                        placeholder={question.content}
+                      />
                     )
                     : (
                       <div>
-                        {question.category.name}
+                        {question.content}
+                        {modif[index]}
                       </div>
                     )
-                  }
-                </td>
-                <td>{question.type}</td>
-                <td>
-                  {
-                    modif[index]
-                      ? (
-                        <input
-                          type="text"
-                          id="questLabel"
-                          name="questLabel"
-                          onChange={event => setQuestLabel(event.target.value)}
-                          value={questLabel}
-                          placeholder={JSON.parse(question.label)}
-                        />
-                      )
-                      : (
-                        <div>
-                          {JSON.parse(question.label)}
-                          {modif[index]}
-                        </div>
-                      )
-                  }
-                </td>
-                <td>
-                  <button type="button" onClick={modif[index] ? event => modifyForm(event, index) : () => handleChange(index)} className="btn btn-primary btn-sm float-right">{modif[index] ? 'BORDEL2CUL' : 'Editer'}</button>
-                </td>
-                <td>
-                  <button type="button" onClick={e => deleteQuestion(e, index, question.id)} className="btn btn-primary btn-sm float-right">Supprimer</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    );
-  }
+                }
+              </th>
+              <td>
+                {modif[index]
+                  ? (
+                    <select
+                      id="inputState"
+                      className="form-control"
+                      onChange={e => setQuestCat(e.target.value)}
+                    >
+                      <option defaultValue>Choix catégorie</option>
+                      {categories.map((mapCategory, catIndex) => (
+                        <option key={[catIndex]}>
+                          {mapCategory.name}
+                        </option>
+                      ))}
+                    </select>
+                  )
+                  : (
+                    <div>
+                      {question.category.name}
+                    </div>
+                  )
+                }
+              </td>
+              <td>{question.type}</td>
+              <td>
+                {
+                  modif[index]
+                    ? (
+                      <input
+                        type="text"
+                        id="questLabel"
+                        name="questLabel"
+                        onChange={event => setQuestLabel(event.target.value)}
+                        value={questLabel}
+                        placeholder={JSON.parse(question.label)}
+                      />
+                    )
+                    : (
+                      <div>
+                        {JSON.parse(question.label)}
+                        {modif[index]}
+                      </div>
+                    )
+                }
+              </td>
+              <td>
+                <button type="button" onClick={modif[index] ? event => modifyForm(event, index) : () => handleChange(index)} className="btn btn-primary btn-sm float-right">{modif[index] ? 'BORDEL2CUL' : 'Editer'}</button>
+              </td>
+              <td>
+                <button type="button" onClick={e => deleteQuestion(e, index, question.id)} className="btn btn-primary btn-sm float-right">Supprimer</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
 
 export default Questions;

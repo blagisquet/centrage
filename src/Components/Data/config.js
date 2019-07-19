@@ -1,3 +1,3 @@
-const url = 'http://192.168.184.172:8001';
+const url = 'https://centrage.nantes2.wilders.dev';
 
 export default url;

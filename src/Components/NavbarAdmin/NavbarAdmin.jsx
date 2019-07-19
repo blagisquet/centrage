@@ -8,6 +8,7 @@ import Patients from '../Patients/Patients';
 import Patient from '../Patient/Patient';
 import RDV from '../RDV/RDV';
 import Formulaire from '../Formulaire/Formulaire';
+import Client from '../Formulaire/Client';
 import './NavbarAdmin.css';
 
 function NavbarAdmin() {
@@ -51,6 +52,7 @@ function NavbarAdmin() {
       <Route path="/client/:id" exact component={Patient} />
       <Route path="/RDV" exact component={RDV} />
       <Route path="/formulaire" exact component={Formulaire} />
+      <Route path="/formulaire/page2" exact component={Client} />
     </Router>
   );
 }
