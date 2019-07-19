@@ -20,6 +20,7 @@ function Questions() {
   const [questId, setQuestId] = useState('');
   const [label, setLabel] = useState('');
   const [questLabel, setQuestLabel] = useState('');
+  
   const handleChange = (index) => {
     const temp = [...modif];
     temp[index] = !temp[index];
@@ -78,7 +79,6 @@ function Questions() {
           questTemp[index].category.name = questCat;
           setQuestions(questTemp);
           questTemp[index].label = questLabel;
-          console.log(questTemp[index]);
           setQuestions(questTemp);
         }
         handleChange(index);
