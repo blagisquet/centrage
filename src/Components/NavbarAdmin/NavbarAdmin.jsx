@@ -21,25 +21,25 @@ function NavbarAdmin() {
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon">.</span>
         </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
+        <div className="collapse navbar-collapse d-flex justify-content-between ml-2 bd-highlight" id="navbarNav">
           <ul className="nav nav-tabs">
             <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
-              <Link to="/category" className="nav-link">Catégorie</Link>
+              <Link to="/category" className="nav-link text-dark">Catégorie</Link>
             </li>
             <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
-              <Link to="/questions" className="nav-link">Questions</Link>
+              <Link to="/questions" className="nav-link text-dark">Questions</Link>
             </li>
             <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
-              <Link to="/clients" className="nav-link">Clients</Link>
+              <Link to="/clients" className="nav-link text-dark">Clients</Link>
             </li>
             <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
-              <Link to="/rdv" className="nav-link">RDV</Link>
+              <Link to="/rdv" className="nav-link text-dark">RDV</Link>
             </li>
             <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
-              <Link to="/formulaire" className="nav-link ">Formulaire</Link>
+              <Link to="/formulaire" className="nav-link text-dark">Formulaire</Link>
             </li>
             <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
-              <Link to="/login" className="nav-link ">Login</Link>
+              <Link to="/login" className="nav-link text-dark">Login</Link>
             </li>
           </ul>
         </div>

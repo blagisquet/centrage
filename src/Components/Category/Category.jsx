@@ -72,12 +72,11 @@ function Category() {
       });
   };
 
-  const deleteCat = (e, index, indexBd) => {
+  const deleteCat = (e, index) => {
     e.preventDefault();
     const data = new FormData();
-    data.append('index', indexBd);
-    console.log(indexBd);
-    axios.delete(`${url}/categories/${indexBd}`, data)
+    data.append('index', index);
+    axios.delete(`${url}/categories/${catId}`, data)
       .then(() => {
         const delTemp = [...categories];
         delTemp.splice(index, 1);

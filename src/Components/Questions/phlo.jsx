@@ -22,7 +22,6 @@ function Questions() {
   const [questId, setQuestId] = useState('');
   const [label, setLabel] = useState('');
   const [questLabel, setQuestLabel] = useState('');
-
   const handleChange = (index) => {
     const temp = [...modif];
     temp[index] = !temp[index];
