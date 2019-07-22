@@ -103,6 +103,7 @@ function Patients() {
   return (
     <div className="container-fluid">
       <div className="tableStyle">
+        <h1>Clients</h1>
         {renderRedirect()}
         {mailArray.length
           ? (
