@@ -15,6 +15,7 @@ const ContextQuestions = () => {
     });
   }, []);
 
+  // eslint-disable-next-line react/prop-types
   const QuestionLine = ({ color }) => (
     <hr
       style={{
@@ -107,9 +108,9 @@ const ContextQuestions = () => {
                 <div className="text-secondary">
                   {x.comment ? (
                     <span>
-                      <hr style={{ borderTop: "dashed 1px", "width": "50%" }} />
+                      <hr style={{ borderTop: 'dashed 1px', width: '50%' }} />
                       <small>{x.comment}</small>
-                      <hr style={{ borderTop: "dashed 1px", "width": "50%" }} />
+                      <hr style={{ borderTop: 'dashed 1px', width: '50%' }} />
                     </span>
                   ) : <div />}
                 </div>
@@ -126,9 +127,9 @@ const ContextQuestions = () => {
                 <div className="text-secondary">
                   {x.comment ? (
                     <span>
-                      <hr style={{ borderTop: "dashed 1px", "width": "50%" }} />
+                      <hr style={{ borderTop: 'dashed 1px', width: '50%' }} />
                       <small>{x.comment}</small>
-                      <hr style={{ borderTop: "dashed 1px", "width": "50%" }} />
+                      <hr style={{ borderTop: 'dashed 1px', width: '50%' }} />
                     </span>
                   ) : <div />}
                 </div>
@@ -152,9 +153,9 @@ const ContextQuestions = () => {
                 <div className="text-secondary">
                   {x.comment ? (
                     <span>
-                      <hr style={{ borderTop: "dashed 1px", "width": "50%" }} />
+                      <hr style={{ borderTop: 'dashed 1px', width: '50%' }} />
                       <small>{x.comment}</small>
-                      <hr style={{ borderTop: "dashed 1px", "width": "50%" }} />
+                      <hr style={{ borderTop: 'dashed 1px', width: '50%' }} />
                     </span>
                   ) : <div />}
                 </div>
@@ -171,9 +172,9 @@ const ContextQuestions = () => {
                 <div className="text-secondary">
                   {x.comment ? (
                     <span>
-                      <hr style={{ borderTop: "dashed 1px", "width": "50%" }} />
+                      <hr style={{ borderTop: 'dashed 1px', width: '50%' }} />
                       <small>{x.comment}</small>
-                      <hr style={{ borderTop: "dashed 1px", "width": "50%" }} />
+                      <hr style={{ borderTop: 'dashed 1px', width: '50%' }} />
                     </span>
                   ) : <div />}
                 </div>

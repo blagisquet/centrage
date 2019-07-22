@@ -131,9 +131,9 @@ const Proche = (props) => {
                 <div className="text-secondary">
                   {x.comment ? (
                     <span>
-                      <hr style={{ borderTop: "dashed 1px", "width": "50%" }} />
+                      <hr style={{ borderTop: 'dashed 1px', width: '50%' }} />
                       <small>{x.comment}</small>
-                      <hr style={{ borderTop: "dashed 1px", "width": "50%" }} />
+                      <hr style={{ borderTop: 'dashed 1px', width: '50%' }} />
                     </span>
                   ) : <div />}
                 </div>
@@ -150,9 +150,9 @@ const Proche = (props) => {
                 <div className="text-secondary">
                   {x.comment ? (
                     <span>
-                      <hr style={{ borderTop: "dashed 1px", "width": "50%" }} />
+                      <hr style={{ borderTop: 'dashed 1px', width: '50%' }} />
                       <small>{x.comment}</small>
-                      <hr style={{ borderTop: "dashed 1px", "width": "50%" }} />
+                      <hr style={{ borderTop: 'dashed 1px', width: '50%' }} />
                     </span>
                   ) : <div />}
                 </div>
@@ -176,9 +176,9 @@ const Proche = (props) => {
                 <div className="text-secondary">
                   {x.comment ? (
                     <span>
-                      <hr style={{ borderTop: "dashed 1px", "width": "50%" }} />
+                      <hr style={{ borderTop: 'dashed 1px', width: '50%' }} />
                       <small>{x.comment}</small>
-                      <hr style={{ borderTop: "dashed 1px", "width": "50%" }} />
+                      <hr style={{ borderTop: 'dashed 1px', width: '50%' }} />
                     </span>
                   ) : <div />}
                 </div>
@@ -195,9 +195,9 @@ const Proche = (props) => {
                 <div className="text-secondary">
                   {x.comment ? (
                     <span>
-                      <hr style={{ borderTop: "dashed 1px", "width": "50%" }} />
+                      <hr style={{ borderTop: 'dashed 1px', width: '50%' }} />
                       <small>{x.comment}</small>
-                      <hr style={{ borderTop: "dashed 1px", "width": "50%" }} />
+                      <hr style={{ borderTop: 'dashed 1px', width: '50%' }} />
                     </span>
                   ) : <div />}
                 </div>

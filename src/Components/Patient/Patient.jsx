@@ -211,12 +211,12 @@ const Patient = ({ match }) => {
                 />
               </label>
             ) : (
-                <span>
-                  <small>Prenom: </small>
-                  {capitalize(name.name)}
-                  {' '}
-                </span>
-              )}
+              <span>
+                <small>Prenom: </small>
+                {capitalize(name.name)}
+                {' '}
+              </span>
+            )}
             {f ? (
               <label htmlFor="lastName">
                 <small>Nom</small>
@@ -232,11 +232,11 @@ const Patient = ({ match }) => {
                 />
               </label>
             ) : (
-                <span>
-                  <small>Nom: </small>
-                  <strong>{capitalize(name.lastName)}</strong>
-                </span>
-              )}
+              <span>
+                <small>Nom: </small>
+                <strong>{capitalize(name.lastName)}</strong>
+              </span>
+            )}
             <button
               type="button"
               className={`btn float-right btn-sm ml-3 ${f ? 'btn-success' : 'btn-primary'}`}
@@ -489,12 +489,12 @@ const Patient = ({ match }) => {
                         placeholder="date naissance"
                       />
                     ) : (
-                        <span id="consumption-address" className="label-content">
-                          {new Date(name.birthDate).toISOString().replace(/T.*/, '').split('-')
-                            .reverse()
-                            .join('-')}
-                        </span>
-                      )}
+                      <span id="consumption-address" className="label-content">
+                        {new Date(name.birthDate).toISOString().replace(/T.*/, '').split('-')
+                          .reverse()
+                          .join('-')}
+                      </span>
+                    )}
                   </div>
                 </div>
                 <div className="bloc-item-action">

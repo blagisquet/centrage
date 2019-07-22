@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Data from '../Data/Data';
 import { Redirect } from 'react-router-dom';
+import Data from '../Data/Data';
 
 const SomeQuestions = () => {
   const [questions, setQuestions] = useState();
@@ -15,6 +15,7 @@ const SomeQuestions = () => {
     });
   }, []);
 
+  // eslint-disable-next-line react/prop-types
   const QuestionLine = ({ color }) => (
     <hr
       style={{
@@ -107,14 +108,14 @@ const SomeQuestions = () => {
                 <div className="text-secondary">
                   {x.comment ? (
                     <span>
-                      <hr style={{ borderTop: "dashed 1px", "width": "50%" }} />
+                      <hr style={{ borderTop: 'dashed 1px', width: '50%' }} />
                       <small>{x.comment}</small>
-                      <hr style={{ borderTop: "dashed 1px", "width": "50%" }} />
+                      <hr style={{ borderTop: 'dashed 1px', width: '50%' }} />
                     </span>
                   ) : <div />}
                 </div>
                 <input placeholder={x.content} className="mb-2 mt-2 w-50" />
-                <QuestionLine color="red" />
+                <QuestionLine color="black" />
               </div>
             );
           }
@@ -126,9 +127,9 @@ const SomeQuestions = () => {
                 <div className="text-secondary">
                   {x.comment ? (
                     <span>
-                      <hr style={{ borderTop: "dashed 1px", "width": "50%" }} />
+                      <hr style={{ borderTop: 'dashed 1px', width: '50%' }} />
                       <small>{x.comment}</small>
-                      <hr style={{ borderTop: "dashed 1px", "width": "50%" }} />
+                      <hr style={{ borderTop: 'dashed 1px', width: '50%' }} />
                     </span>
                   ) : <div />}
                 </div>
@@ -140,7 +141,7 @@ const SomeQuestions = () => {
                   <span className="mr-3">Non</span>
                   <input type="checkbox" />
                 </label>
-                <QuestionLine color="red" />
+                <QuestionLine color="black" />
               </div>
             );
           }
@@ -152,14 +153,14 @@ const SomeQuestions = () => {
                 <div className="text-secondary">
                   {x.comment ? (
                     <span>
-                      <hr style={{ borderTop: "dashed 1px", "width": "50%" }} />
+                      <hr style={{ borderTop: 'dashed 1px', width: '50%' }} />
                       <small>{x.comment}</small>
-                      <hr style={{ borderTop: "dashed 1px", "width": "50%" }} />
+                      <hr style={{ borderTop: 'dashed 1px', width: '50%' }} />
                     </span>
                   ) : <div />}
                 </div>
                 <input placeholder={x.content} className="mb-2 mt-2 w-50" />
-                <QuestionLine color="red" />
+                <QuestionLine color="black" />
               </div>
             );
           }
@@ -171,9 +172,9 @@ const SomeQuestions = () => {
                 <div className="text-secondary">
                   {x.comment ? (
                     <span>
-                      <hr style={{ borderTop: "dashed 1px", "width": "50%" }} />
+                      <hr style={{ borderTop: 'dashed 1px', width: '50%' }} />
                       <small>{x.comment}</small>
-                      <hr style={{ borderTop: "dashed 1px", "width": "50%" }} />
+                      <hr style={{ borderTop: 'dashed 1px', width: '50%' }} />
                     </span>
                   ) : <div />}
                 </div>
@@ -199,6 +200,7 @@ const SomeQuestions = () => {
                       </span>
                     ))
                     : notNullSituation(x).map((item, index) => (<span key={[index]}>{item}</span>))}
+                <QuestionLine color="black" />
               </div>
             );
           }
