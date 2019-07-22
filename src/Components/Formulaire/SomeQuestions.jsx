@@ -1,30 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
 import Data from '../Data/Data';
+import { Redirect } from 'react-router-dom';
 
-const Proche = (props) => {
+const SomeQuestions = () => {
   const [questions, setQuestions] = useState();
   const [categorie, setCategorie] = useState();
-  const [eventsProps, setEventsProps] = useState({});
   const [redirect, setRedirect] = useState(false);
-
-  useEffect(() => {
-    setEventsProps(props);
-  }, [props]);
-
-  useEffect(() => {
-    if (eventsProps.data) {
-      setQuestions(eventsProps.data.questions);
-    }
-  }, [eventsProps.data]);
+  const [redirectBack, setRedirectBack] = useState();
 
   useEffect(() => {
     Data((result) => {
-      setCategorie(result[0]);
+      setCategorie(result[3]);
+      setQuestions(result[3].questions);
     });
   }, []);
 
-  // eslint-disable-next-line react/prop-types
   const QuestionLine = ({ color }) => (
     <hr
       style={{
@@ -38,33 +28,19 @@ const Proche = (props) => {
     if (redirect) {
       return (
         <div>
+          <Redirect to="/formulaire/page4" />
+        </div>
+      );
+    }
+    if (redirectBack) {
+      return (
+        <div>
           <Redirect to="/formulaire/page2" />
         </div>
       );
     }
     return null;
   };
-
-  // const modifyForm = (ev) => {
-  //   ev.preventDefault();
-  //   const dataModif = new FormData();
-  //   dataModif.append('name', 'flocea');
-  //   dataModif.append('lastName', 'ninja');
-  //   dataModif.append('phone', '0680868685');
-  //   dataModif.append('relationship', 'fils');
-  //   dataModif.append('mail', 'x@z.fr');
-  //   dataModif.append('caregiver', 0);
-
-  //   axios.post(`${url}/relative-persons/`, dataModif)
-  //     .then((response) => {
-  //       // eslint-disable-next-line no-console
-  //       console.log(response);
-  //     })
-  //     .catch((error) => {
-  //       // eslint-disable-next-line no-console
-  //       console.log(error);
-  //     });
-  // };
 
   const nullSituation = (x) => {
     const forIndex = x.type.slice(-2, -1);
@@ -106,12 +82,12 @@ const Proche = (props) => {
     return array;
   };
 
-  if (!questions || !categorie) { return <div>loading</div>; }
+  if (!questions) { return <div>loading</div>; }
 
   return (
     <div className="container-fluid cardDisplay">
       <h2 className="mb-5">
-        Questions concernant le
+        Questions concernant la
         {' '}
         <em>{categorie.name}</em>
       </h2>
@@ -225,10 +201,11 @@ const Proche = (props) => {
       }
       {renderRedirect()}
       <div>
+        <button type="button" className="mt-5 mb-5 mr-5 float-left btn btn-primary" onClick={() => setRedirectBack(true)}>revenez categorie anterieure</button>
         <button type="button" className="mt-5 mb-5 mr-5 float-right btn btn-primary" onClick={() => setRedirect(true)}>passez a la prochaine categorie</button>
       </div>
     </div>
   );
 };
 
-export default Proche;
+export default SomeQuestions;
