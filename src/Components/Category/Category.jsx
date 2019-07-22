@@ -72,11 +72,11 @@ function Category() {
       });
   };
 
-  const deleteCat = (e, index) => {
+  const deleteCat = (e, index, indexBd) => {
     e.preventDefault();
     const data = new FormData();
-    data.append('index', index);
-    axios.delete(`${url}/categories/${catId}`, data)
+    data.append('index', indexBd);
+    axios.delete(`${url}/categories/${indexBd}`, data)
       .then(() => {
         const delTemp = [...categories];
         delTemp.splice(index, 1);
@@ -131,7 +131,7 @@ function Category() {
                   }
                 </th>
                 <td><button type="button" onClick={modif[index] ? event => modifyForm(event, index) : () => handleChange(index)} className="btn btn-primary btn-sm float-right">{modif[index] ? 'Valider' : 'Editer'}</button></td>
-                <td><button type="button" onClick={e => deleteCat(e, index, category.id)} className="btn btn-primary btn-sm float-right">Supprimer</button></td>
+                <td><button type="button" onClick={e => deleteCat(e, index, catCategory.id)} className="btn btn-primary btn-sm float-right">Supprimer</button></td>
               </tr>
             ))}
           </tbody>
