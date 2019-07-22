@@ -26,7 +26,7 @@ function RDV() {
   };
 
   return (
-    <div className="tableStyle">
+    <div className="tableRdvStyle">
       <h1>Rendez-vous</h1>
       <table className="rdv-style table table-hover table-bordered">
         <thead>

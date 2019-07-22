@@ -15,14 +15,14 @@ import './NavbarAdmin.css';
 function NavbarAdmin() {
   return (
     <Router>
-      <nav className="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+      <nav className="navbar fixed-top navbar-expand-xl navbar-light bg-light">
         <Link to="/" className="navbar-brand">
           <img src="http://centrage.fr/wp-content/uploads/2019/05/logo-Centrage.jpg" alt="Centrage" />
         </Link>
         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon">.</span>
         </button>
-        <div className="collapse navbar-collapse d-flex justify-content-between ml-2 bd-highlight" id="navbarNav">
+        <div className="collapse navbar-collapse bd-highlight" id="navbarNav">
           <ul className="nav nav-tabs">
             <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
               <Link to="/category" className="nav-link text-dark">Catégorie</Link>
@@ -39,14 +39,14 @@ function NavbarAdmin() {
             <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
               <Link to="/formulaire" className="nav-link text-dark">Formulaire</Link>
             </li>
-            <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
+            {/* <li className="nav-item" data-toggle="collapse" data-target=".navbar-collapse.show">
               <Link to="/login" className="nav-link text-dark">Login</Link>
-            </li>
+            </li> */}
           </ul>
         </div>
       </nav>
-      <Route path="/login" exact component={Login} />
-      <Route path="/homepage" exact component={Homepage} />
+      {/* <Route path="/login" exact component={Login} /> */}
+      <Route path="/" exact component={RDV} />
       <Route path="/category" exact component={Category} />
       <Route path="/questions" exact component={Questions} />
       <Route path="/clients" exact component={Patients} />

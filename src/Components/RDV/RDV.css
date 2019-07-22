@@ -1,3 +1,28 @@
 .rdv-style {
   margin-top: 2rem;
 }
+
+@media screen and (max-width: 1028px) {
+  .tableRdvStyle {
+    width: 100%;
+    margin: auto;
+    margin-top: 11vmax;
+  }
+
+  .rdv-style {
+    max-width: 100%;
+    min-width: 60%; 
+  }
+}
+
+@media screen and (min-width: 1029px) {
+  .tableRdvStyle {
+    width: 100%;
+    margin: auto;
+    margin-top: 11vmax;
+  }
+
+  h1 {
+    text-align: center;
+  }
+}
