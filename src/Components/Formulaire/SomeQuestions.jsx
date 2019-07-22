@@ -24,6 +24,13 @@ const SomeQuestions = () => {
     />
   );
 
+  const capitalize = (string) => {
+    if (string === undefined) {
+      return '';
+    }
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+  };
+
   const renderRedirect = () => {
     if (redirect) {
       return (
@@ -96,7 +103,7 @@ const SomeQuestions = () => {
           if (x.type === 'string' || x.type === 'Texte') {
             return (
               <div key={[i]} className="mt-3">
-                <div><strong>{x.content}</strong></div>
+                <div><strong>{capitalize(x.content)}</strong></div>
                 <div className="text-secondary">
                   {x.comment ? (
                     <span>
@@ -115,7 +122,7 @@ const SomeQuestions = () => {
           if (x.type === 'bool' || x.type === 'Oui/Non') {
             return (
               <div key={[i]} className="mt-3">
-                <div><strong>{x.content}</strong></div>
+                <div><strong>{capitalize(x.content)}</strong></div>
                 <div className="text-secondary">
                   {x.comment ? (
                     <span>
@@ -141,7 +148,7 @@ const SomeQuestions = () => {
           if (x.type === 'int' || x.type === 'Nombre') {
             return (
               <div key={[i]} className="mt-3">
-                <div><strong>{x.content}</strong></div>
+                <div><strong>{capitalize(x.content)}</strong></div>
                 <div className="text-secondary">
                   {x.comment ? (
                     <span>
@@ -160,7 +167,7 @@ const SomeQuestions = () => {
           if (x.type.includes('Echel') || x.type.includes('echel')) {
             return (
               <div key={[i]} className="mt-3">
-                <div><strong>{x.content}</strong></div>
+                <div><strong>{capitalize(x.content)}</strong></div>
                 <div className="text-secondary">
                   {x.comment ? (
                     <span>

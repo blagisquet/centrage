@@ -42,6 +42,13 @@ const ContextQuestions = () => {
     return null;
   };
 
+  const capitalize = (string) => {
+    if (string === undefined) {
+      return '';
+    }
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+  };
+
   const nullSituation = (x) => {
     const forIndex = x.type.slice(-2, -1);
     // const lessindex = x.type.slice(-4, -3);
@@ -96,7 +103,7 @@ const ContextQuestions = () => {
           if (x.type === 'string' || x.type === 'Texte') {
             return (
               <div key={[i]} className="mt-3">
-                <div><strong>{x.content}</strong></div>
+                <div><strong>{capitalize(x.content)}</strong></div>
                 <div className="text-secondary">
                   {x.comment ? (
                     <span>
@@ -107,7 +114,7 @@ const ContextQuestions = () => {
                   ) : <div />}
                 </div>
                 <input placeholder={x.content} className="mb-2 mt-2 w-50" />
-                <QuestionLine color="red" />
+                <QuestionLine color="black" />
               </div>
             );
           }
@@ -115,7 +122,7 @@ const ContextQuestions = () => {
           if (x.type === 'bool' || x.type === 'Oui/Non') {
             return (
               <div key={[i]} className="mt-3">
-                <div><strong>{x.content}</strong></div>
+                <div><strong>{capitalize(x.content)}</strong></div>
                 <div className="text-secondary">
                   {x.comment ? (
                     <span>
@@ -133,7 +140,7 @@ const ContextQuestions = () => {
                   <span className="mr-3">Non</span>
                   <input type="checkbox" />
                 </label>
-                <QuestionLine color="red" />
+                <QuestionLine color="black" />
               </div>
             );
           }
@@ -141,7 +148,7 @@ const ContextQuestions = () => {
           if (x.type === 'int' || x.type === 'Nombre') {
             return (
               <div key={[i]} className="mt-3">
-                <div><strong>{x.content}</strong></div>
+                <div><strong>{capitalize(x.content)}</strong></div>
                 <div className="text-secondary">
                   {x.comment ? (
                     <span>
@@ -152,7 +159,7 @@ const ContextQuestions = () => {
                   ) : <div />}
                 </div>
                 <input placeholder={x.content} className="mb-2 mt-2 w-50" />
-                <QuestionLine color="red" />
+                <QuestionLine color="black" />
               </div>
             );
           }
@@ -160,7 +167,7 @@ const ContextQuestions = () => {
           if (x.type.includes('Echel') || x.type.includes('echel')) {
             return (
               <div key={[i]} className="mt-3">
-                <div><strong>{x.content}</strong></div>
+                <div><strong>{capitalize(x.content)}</strong></div>
                 <div className="text-secondary">
                   {x.comment ? (
                     <span>
@@ -192,6 +199,7 @@ const ContextQuestions = () => {
                       </span>
                     ))
                     : notNullSituation(x).map((item, index) => (<span key={[index]}>{item}</span>))}
+                <QuestionLine color="black" />
               </div>
             );
           }
