@@ -22,6 +22,9 @@ function Questions() {
   const [questId, setQuestId] = useState('');
   const [label, setLabel] = useState('');
   const [questLabel, setQuestLabel] = useState('');
+  const [filter, setFilter] = useState('all');
+  const [filteredList, setFilteredList] = useState([]);
+
   const handleChange = (index) => {
     const temp = [...modif];
     temp[index] = !temp[index];
@@ -31,7 +34,7 @@ function Questions() {
     setQuestCat(questions[index].category.name);
     setQuestType(questions[index].type);
     setQuestId(questions[index].id);
-    setQuestLabel(JSON.parse((questions[index].label)));
+    setQuestLabel(questions[index].label);
   };
 
   const deleteQuestion = (e, index, indexBdd) => {
@@ -49,7 +52,6 @@ function Questions() {
   useEffect(() => {
     axios.get(`${url}/questions`)
       .then((result) => {
-        console.log(result.data);
         setQuestions(result.data);
         setQuestId(result.data.id);
         let temp = [];
@@ -75,19 +77,17 @@ function Questions() {
     data.append('category', dataModif.modQuestCat);
     data.append('type', dataModif.modQuestType);
     data.append('comment', dataModif.modQuestComm);
-    data.append('label', JSON.stringify((dataModif.modQuestLabel)));
+    data.append('label', (dataModif.modQuestLabel));
     axios.post(`${url}/questions/update/${questId}`, data)
       .then((response) => {
         if (response.status === 200) {
-          axios.get(`${url}/questions`)
-            .then((result) => {
-              setQuestions(result.data);
-              let temp = [];
-              for (let i = 0; i <= result.data.length; i += 1) {
-                temp = [...temp, false];
-              }
-              setModif(temp);
-            });
+          const questTemp = [...questions];
+          questTemp[index].content = questName;
+          setQuestions(questTemp);
+          questTemp[index].category.name = questCat;
+          setQuestions(questTemp);
+          questTemp[index].label = questLabel;
+          setQuestions(questTemp);
         }
         handleChange(index);
       });
@@ -108,20 +108,52 @@ function Questions() {
     data.append('category', dataSend.dataCategory);
     data.append('type', dataSend.dataType);
     data.append('comment', dataSend.dataComment);
-    data.append('label', JSON.stringify(dataSend.dataLabel));
-    for (let [key, value] of data.entries()) {
-      console.log(`${key}: ${value}`);
-    }
-
+    data.append('label', dataSend.dataLabel);
     axios.post(`${url}/questions/`, data)
       .then((response) => {
         if (response.status === 201) {
-          axios.get(`${url}/questions`)
-            .then((result) => {
-              setQuestions(result.data);
-            });
+          setQuestions([...questions, {
+            id: response.data.id,
+            comment,
+            content: name,
+            type,
+            label,
+            category: {
+              name: category,
+            },
+          },
+          ]);
         }
       });
+  };
+
+  const handleSelection = (ev) => {
+    setFilter(ev.target.value);
+  };
+
+  const filterUnique = (result) => {
+    const arrayTwo = [];
+    arrayTwo.push('all');
+    result.forEach((x) => {
+      if (arrayTwo.indexOf(x.category.name) === -1) {
+        arrayTwo.push(x.category.name);
+      }
+    });
+    setFilteredList(arrayTwo);
+  };
+
+  const capitalize = (string) => {
+    if (string === undefined) {
+      return '';
+    }
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+  };
+
+  const getFilteredList = () => {
+    if (filter === 'all') {
+      return questions;
+    }
+    return questions.filter(y => y.category.name === filter);
   };
 
   useEffect(() => {
@@ -130,6 +162,10 @@ function Questions() {
         setCategories(result.data);
       });
   }, []);
+
+  useEffect(() => {
+    filterUnique(questions);
+  });
 
   const filterQuestions = (tag, [setFunc, param]) => {
     if (param) {
@@ -184,8 +220,8 @@ function Questions() {
             </label>
           </div>
         </div>
-        {type === 'Echelle' ?
-          (
+        {type === 'Echelle'
+          ? (
             <div>
               <div className="row maxStyle">
                 <div className="form-row align-items-center col-6">
@@ -216,16 +252,23 @@ function Questions() {
             <input type="text" className="form-control inputWidth" id="commentaire" onChange={e => setComment(e.target.value)} />
           </label>
         </div>
-
-
-
         <button type="submit" onClick={submit} className="btn btn-success questionBut">Ajouter une question</button>
       </form>
       <table className="question-table-style table table-hover table-bordered">
         <thead>
           <tr>
             <th className="col-4" scope="col">Questions</th>
-            <th onClick={() => filterQuestions('name', [setFilterCategory, filterCategory])} className="col-3" scope="col">Catégorie</th>
+            <th
+              className="col-3"
+              scope="col"
+            >
+              <span onClick={() => filterQuestions('name', [setFilterCategory, filterCategory])}>Catégorie</span>
+              <select onChange={handleSelection} value={filter} className="custom-select custom-select-sm">
+                {filteredList.map((x, i) => (
+                  <option key={[i]} value={x}>{capitalize(x)}</option>
+                ))}
+              </select>
+            </th>
             <th className="col-3" scope="col">Type de questions</th>
             <th className="col-3" scope="col">Commentaire</th>
             <th className="col-3" scope="col">Valeurs échelle</th>
@@ -235,7 +278,7 @@ function Questions() {
           </tr>
         </thead>
         <tbody>
-          {questions.map((question, index) => (
+          {getFilteredList().map((question, index) => (
             <tr key={[index]}>
               <th scope="row">
                 {

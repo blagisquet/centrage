@@ -64,7 +64,7 @@ const ContextQuestions = () => {
     const forIndex = x.type.slice(-2, -1);
     // const lessindex = x.type.slice(-4, -3);
 
-    const labels = JSON.parse(x.label).split(',');
+    const labels = (x.label).split(',');
 
     const array = [];
     for (let i = 0; i <= forIndex; i += 1) {
