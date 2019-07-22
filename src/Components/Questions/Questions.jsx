@@ -261,8 +261,9 @@ function Questions() {
             <th
               className="col-3"
               scope="col"
+              onClick={() => filterQuestions('name', [setFilterCategory, filterCategory])}
             >
-              <span onClick={() => filterQuestions('name', [setFilterCategory, filterCategory])}>Catégorie</span>
+              Catégorie
               <select onChange={handleSelection} value={filter} className="custom-select custom-select-sm">
                 {filteredList.map((x, i) => (
                   <option key={[i]} value={x}>{capitalize(x)}</option>
