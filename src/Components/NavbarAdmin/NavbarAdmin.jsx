@@ -1,9 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Category from '../Category/Category';
-import Homepage from '../Homepage/Homepage';
-import Login from '../Login/Login';
-import Questions from '../Questions/phlo';
+// import Login from '../Login/Login';
+import Questions from '../Questions/Questions';
 import Patients from '../Patients/Patients';
 import Patient from '../Patient/Patient';
 import RDV from '../RDV/RDV';
